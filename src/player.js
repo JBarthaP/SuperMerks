@@ -19,42 +19,42 @@ export default class Player extends Phaser.GameObjects.Sprite {
         const idleAnimation = this.scene.anims.create({
             key: 'idle',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 0, end: 4}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
 
         const walkDownAnimation = this.scene.anims.create({
             key: 'down',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 5, end: 9}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
 
         const idleUpAnimation = this.scene.anims.create({
             key: 'idle_up',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 10, end: 14}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
 
         const walkUpAnimation = this.scene.anims.create({
             key: 'up',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 15, end: 19}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
 
         const idleSideAnimation = this.scene.anims.create({
             key: 'idle_side',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 20, end: 24}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
 
         const walkSideAnimation = this.scene.anims.create({
             key: 'walk_side',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 25, end: 29}),
-            frameRate: 5,
+            frameRate: 10,
             repeat: -1
         });
         
@@ -102,19 +102,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
                 if (this.cursors.up.isDown) {
                     direction.y -= 1;
-                    this.play('up');
+                    this.play('up', true);
                 }
                 else if (this.cursors.down.isDown) {
                     direction.y += 1;
-                    this.play('down');
+                    this.play('down', true);
                 }
                 if (this.cursors.left.isDown) {
                     direction.x -= 1;
-                    this.play('walk_side').setFlipX(true);
+                    this.play('walk_side', true).setFlipX(true);
                 }
                 else if (this.cursors.right.isDown) {
                     direction.x += 1;
-                    this.play('walk_side').setFlipX(false);
+                    this.play('walk_side', true).setFlipX(false);
                 }
                 else {
                     // this.play('idle');
