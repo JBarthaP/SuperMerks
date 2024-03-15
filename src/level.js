@@ -28,9 +28,11 @@ export default class Level extends Phaser.Scene {
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
+        this.player.setDepth(2)
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
         this.enemy = new Enemy(this, 0,0, this.player)
 
+        this.initMap()
     }
 
     /**
@@ -58,4 +60,20 @@ export default class Level extends Phaser.Scene {
 
         }
     }
+
+    initMap() {
+		const mapa = this.map = this.make.tilemap({
+			key: 'mapa'
+		});
+
+		// TILE IMAGE
+		const tiles = mapa.addTilesetImage('tileset x1', 'tilesmapa');
+
+        this.groundLayer = this.map.createLayer('capa2', tiles);
+        this.walllayer = this.map.createLayer('capa1', tiles);
+
+
+
+	
+	}
 }

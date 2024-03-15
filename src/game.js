@@ -9,8 +9,8 @@ import Phaser from 'phaser'
  */
 let config = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: 700,
+    width: 1152,
+    height: 640,
     scale: {
         // mode: Phaser.Scale.FIT,  
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
