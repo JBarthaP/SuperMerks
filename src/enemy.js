@@ -49,10 +49,12 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
         this.play('teacher_shoot');
         // Dibuja una línea desde el enemigo hasta el jugador
-        this.graphics.lineStyle(2, 0xff0000);
+        this.graphics.lineStyle(5, 0xff0000);
         this.graphics.beginPath();
         this.graphics.moveTo(this.x, this.y);
-        this.graphics.lineTo(this.target.x, this.target.y);
+        //Esto lo hize yo (pablo) pero cambienlo
+        const coords = this.ramdomCoords(1152, 640)
+        this.graphics.lineTo(coords[0], coords[1]);
         this.graphics.strokePath();
 
         // Elimina la línea después de un tiempo
@@ -67,7 +69,20 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         
     }
     
-    
+    ramdomCoords(max, min){
+        let x = 0
+        let y = 0;
+
+        const first = Math.floor(Math.random() * (1 - 0 + 1) + 0) > 0;
+        if(first){
+            x = Math.floor(Math.random() * (max - min + 1) + min)
+        }else{
+            y = Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        return [x, y];
+    }
+
     /**
      * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
      * Como se puede ver, no se tratan las colisiones con las estrellas, ya que estas colisiones 
