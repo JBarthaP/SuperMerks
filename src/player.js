@@ -20,16 +20,67 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
-        this.speed = 300;
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "");
+        
+        //Propiedades player
+        this.body.allowGravity = false;
+        
+        //Keys
         this.cursors = this.scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D
         })
+        this.keySpace = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        
+        //Estados jugador
+        this.isDashing = false
+        
+        //Player data
+        this.dashSpeed = 800
+        this.speed = 400;
+
+        //Choose controls
+        this.handleControls()
+        this.controls = this.keyboardControls
+        //If gamepad controls
+        
         this.updateScore();
+    }
+
+    handleControls() {
+        this.keyboardControls = {
+            movementControl: () => {
+                let direction = new Phaser.Math.Vector2();
+            
+                if (this.cursors.up.isDown) {
+                    direction.y -= 1;
+                }
+                else if(this.cursors.down.isDown) {
+                    direction.y += 1;
+                }
+                if (this.cursors.left.isDown) {
+                    direction.x -= 1;
+                }
+                else if (this.cursors.right.isDown) {
+                    direction.x += 1;
+                }
+                direction.normalize();
+                this.body.setVelocity(direction.x * this.speed, direction.y * this.speed)
+            },
+
+            dashControl: () => {
+                if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+                    this.initDash();
+                } 
+            },
+
+            // pauseGame: () => {
+
+            // }
+        }
     }
 
     /**
@@ -56,21 +107,27 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-
-        this.body.setVelocity(0)
-
-        if (this.cursors.up.isDown) {
-            this.body.setVelocityY(-this.speed);
-        }
-        else if(this.cursors.down.isDown) {
-            this.body.setVelocityY(this.speed);
-        }
-        if (this.cursors.left.isDown) {
-            this.body.setVelocityX(-this.speed);
-        }
-        else if (this.cursors.right.isDown) {
-            this.body.setVelocityX(this.speed);
-        }
+        
+        if(!this.isDashing)
+        {
+            this.controls.movementControl();
+            this.controls.dashControl();
+        } 
     }
-
+    
+    
+    initDash()
+    {
+        let dashDirection = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
+        dashDirection.normalize();
+        
+        this.body.setVelocity(dashDirection.x * this.dashSpeed, dashDirection.y * this.dashSpeed);
+        
+        // Cooldown del dash, deberiamos ponerlo como variable
+        this.isDashing = true;
+        this.scene.time.delayedCall(200, function () {
+                this.isDashing = false;
+            }, [], this);
+    }
+            
 }

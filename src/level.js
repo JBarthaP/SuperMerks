@@ -1,5 +1,6 @@
 import Platform from './platform.js';
 import Player from './player.js';
+import Enemy from './enemy.js';
 import Phaser from 'phaser'
 
 
@@ -17,6 +18,7 @@ export default class Level extends Phaser.Scene {
      */
     constructor() {
         super({ key: 'level' });
+        
     }
 
     /**
@@ -26,6 +28,8 @@ export default class Level extends Phaser.Scene {
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
+        //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
+        this.enemy = new Enemy(this, 0,0, this.player)
 
     }
 
