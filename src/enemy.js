@@ -35,32 +35,47 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         
         //Estados jugador
         this.isShooting = false
+        this.isShootingCooldown = false
         
         //Player data
         this.cooldown = 0.5
         // this.speed = 400;
 
-          // Llama al método shootRay cuando sea necesario
-          this.timerEvent = scene.time.addEvent({ delay: 3000, callback: this.shoot, callbackScope: this, loop: true });
+        //Rays anims
+        this.progressLine = 0
+        this.durationToReach = 1500
+        this.startPoint = new Phaser.Math.Vector2(this.x, this.y)
+        this.targetPoint = new Phaser.Math.Vector2()
+
+        // Llama al método shootRay cuando sea necesario
+        // this.timerEvent = scene.time.addEvent({ delay: 3000, callback: this.shoot, callbackScope: this, loop: true });
     }
 
-    shoot()
+    shoot(dt)
     {
 
         this.play('teacher_shoot');
         // Dibuja una línea desde el enemigo hasta el jugador
-        this.graphics.lineStyle(5, 0xff0000);
+        this.graphics.clear()
+        this.graphics.lineStyle(4, 0xff0000);
         this.graphics.beginPath();
         this.graphics.moveTo(this.x, this.y);
+
         //Esto lo hize yo (pablo) pero cambienlo
-        const coords = this.ramdomCoords(1152, 640)
-        this.graphics.lineTo(coords[0], coords[1]);
+        const progressPoint = Phaser.Math.LinearXY(this.startPoint, this.targetPoint, this.progressLine);
+         this.graphics.lineTo(progressPoint.x, progressPoint.y)
+        // const coords = this.ramdomCoords(1152, 640)
+        // this.graphics.lineTo(coords[0], coords[1]);
         this.graphics.strokePath();
 
+        this.progressLine += dt / this.durationToReach
         // Elimina la línea después de un tiempo
-        this.scene.time.delayedCall(1500, () => {
-            this.graphics.clear();
-        });
+        if(this.progressLine >= 1)
+        {
+            this.graphics.clear()
+            this.progressLine = 0
+            this.isShooting = false
+        }
 
         this.scene.sound.add("mondongo", {
             volume: 0.15,
@@ -91,6 +106,17 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
+        if(!this.isShooting)
+        {
+            const coords = this.ramdomCoords(1152, 640)
+            this.targetPoint.set(coords[0], coords[1])
+            this.isShooting = true
+        }
+        else 
+        {
+            this.shoot(dt)
+        }
+
     }
     
     
