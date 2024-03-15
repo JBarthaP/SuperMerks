@@ -10,6 +10,7 @@ import player from '../assets/sprites/player1.png'
 import player_dash from '../assets/sprites/player_dash.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
+import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -33,6 +34,7 @@ export default class Boot extends Phaser.Scene {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.tilemapTiledJSON('mapa', map);
     this.load.image('tilesmapa', tileset);
+    this.load.image('tilesmapa2', tileset2);
     this.load.audio('mondongo', mondongo)
     this.load.setPath('assets/sprites/');
     this.load.image('platform', platform);
