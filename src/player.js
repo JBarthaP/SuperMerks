@@ -23,7 +23,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.speed = 300;
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "");
-        this.cursors = this.scene.input.keyboard.createCursorKeys();
+        this.cursors = this.scene.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D
+        })
         this.updateScore();
     }
 
