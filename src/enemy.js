@@ -17,7 +17,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
         const shootAnimation = this.scene.anims.create({
             key: 'teacher_shoot',
-            frames: this.scene.anims.generateFrameNumbers('teacher', { start: 0, end: 3 }),
+            frames: this.scene.anims.generateFrameNumbers('teacher', { start: 0, end: 2 }),
             frameRate: 9
         });
 

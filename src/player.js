@@ -57,6 +57,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
             frameRate: 10,
             repeat: -1
         });
+
+        const dashAnimation = this.scene.anims.create({
+            key: 'dash',
+            frames: this.scene.anims.generateFrameNumbers('player_dash', {start: 0, end: 2}),
+            frameRate: 3,
+            repeat: -1
+        });
         
         this.play('idle');
 
@@ -126,6 +133,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
             dashControl: () => {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
                     this.initDash();
+                    this.play('dash', true);
+
                 }
             },
 

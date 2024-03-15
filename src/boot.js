@@ -5,6 +5,7 @@ import platform from '../assets/sprites/platform.png'
 import base from '../assets/sprites/base.png'
 import star from '../assets/sprites/star.png'
 import player from '../assets/sprites/player1.png'
+import player_dash from '../assets/sprites/player_dash.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 
 /**
@@ -33,6 +34,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('star', star);
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
+    this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
   }
 
   /**
