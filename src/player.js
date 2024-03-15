@@ -61,8 +61,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
         const dashAnimation = this.scene.anims.create({
             key: 'dash',
             frames: this.scene.anims.generateFrameNumbers('player_dash', {start: 0, end: 2}),
-            frameRate: 3,
-            repeat: -1
+            frameRate: 6,
+            repeat: 0
+        });
+
+        this.on('animationcomplete', end => {
+            if (this.anims.currentAnim.key === 'dash'){
+                this.isDashing = false;
+            }
         });
         
         this.play('idle');
@@ -124,7 +130,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                     this.play('walk_side', true).setFlipX(false);
                 }
                 
-                if(this.body.velocity.x === 0 && this.body.velocity.y === 0){
+                if(this.body.velocity.x === 0 && this.body.velocity.y === 0 && !this.isDashing){
                     this.play('idle', true);
                 }
                 direction.normalize();
@@ -135,7 +141,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
                     this.initDash();
                     this.play('dash', true);
-
                 }
             },
 
@@ -185,9 +190,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         // Cooldown del dash, deberiamos ponerlo como variable
         this.isDashing = true;
-        this.scene.time.delayedCall(200, function () {
-            this.isDashing = false;
-        }, [], this);
     }
 
 }
