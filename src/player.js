@@ -24,7 +24,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         });
 
         const walkDownAnimation = this.scene.anims.create({
-            key: 'down',
+            key: 'walk_down',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 5, end: 9}),
             frameRate: 10,
             repeat: -1
@@ -38,7 +38,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         });
 
         const walkUpAnimation = this.scene.anims.create({
-            key: 'up',
+            key: 'walk_up',
             frames: this.scene.anims.generateFrameNumbers('player', {start: 15, end: 19}),
             frameRate: 10,
             repeat: -1
@@ -102,13 +102,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
                 if (this.cursors.up.isDown) {
                     direction.y -= 1;
-                    this.play('up', true);
+                    this.play('walk_up', true);
                 }
                 else if (this.cursors.down.isDown) {
                     direction.y += 1;
-                    this.play('down', true);
+                    this.play('walk_down', true);
                 }
-                if (this.cursors.left.isDown) {
+                else if (this.cursors.left.isDown) {
                     direction.x -= 1;
                     this.play('walk_side', true).setFlipX(true);
                 }
