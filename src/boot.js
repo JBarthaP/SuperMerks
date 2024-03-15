@@ -5,6 +5,8 @@ import platform from '../assets/sprites/platform.png'
 import base from '../assets/sprites/base.png'
 import star from '../assets/sprites/star.png'
 import player from '../assets/sprites/player1.png'
+import teacher from '../assets/sprites/teacher_spritesheet.png'
+
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  * Esta escena se puede mejorar añadiendo una imagen del juego y una 
@@ -29,7 +31,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image('platform', platform);
     this.load.image('base', base);
     this.load.image('star', star);
-    this.load.spritesheet('player', player,  { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
   }
 
   /**

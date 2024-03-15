@@ -14,6 +14,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y, player) {
         super(scene, x, y, 'enemy');
+
+        const shootAnimation = this.scene.anims.create({
+            key: 'teacher_shoot',
+            frames: this.scene.anims.generateFrameNumbers('teacher', { start: 0, end: 3 }),
+            frameRate: 9
+        });
+
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
@@ -39,6 +46,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     shoot()
     {
 
+        this.play('teacher_shoot');
         // Dibuja una línea desde el enemigo hasta el jugador
         this.graphics.lineStyle(2, 0xff0000);
         this.graphics.beginPath();

@@ -29,7 +29,7 @@ export default class Level extends Phaser.Scene {
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemy = new Enemy(this, 0,0, this.player)
+        this.enemy = new Enemy(this, 50,50, this.player)
 
     }
 
