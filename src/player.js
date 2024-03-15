@@ -15,6 +15,51 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y) {
         super(scene, x, y, 'player');
+
+        const idleAnimation = this.scene.anims.create({
+            key: 'idle',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 0, end: 4}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        const walkDownAnimation = this.scene.anims.create({
+            key: 'walk_down',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 5, end: 9}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        const idleUpAnimation = this.scene.anims.create({
+            key: 'idle_up',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 10, end: 14}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        const walkUpAnimation = this.scene.anims.create({
+            key: 'walk_up',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 15, end: 19}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        const idleSideAnimation = this.scene.anims.create({
+            key: 'idle_side',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 20, end: 24}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        const walkSideAnimation = this.scene.anims.create({
+            key: 'walk_side',
+            frames: this.scene.anims.generateFrameNumbers('player', {start: 25, end: 29}),
+            frameRate: 10,
+            repeat: -1
+        });
+        
+        this.play('idle');
+
         this.score = 0;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -22,10 +67,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds();
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "");
-        
+
         //Propiedades player
         this.body.allowGravity = false;
-        
+
         //Keys
         this.cursors = this.scene.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -34,10 +79,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
             right: Phaser.Input.Keyboard.KeyCodes.D
         })
         this.keySpace = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        
+
         //Estados jugador
         this.isDashing = false
-        
+
         //Player data
         this.dashSpeed = 800
         this.speed = 400;
@@ -46,7 +91,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.handleControls()
         this.controls = this.keyboardControls
         //If gamepad controls
-        
+
         this.updateScore();
     }
 
@@ -54,18 +99,26 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.keyboardControls = {
             movementControl: () => {
                 let direction = new Phaser.Math.Vector2();
-            
+
                 if (this.cursors.up.isDown) {
                     direction.y -= 1;
+                    this.play('walk_up', true);
                 }
-                else if(this.cursors.down.isDown) {
+                else if (this.cursors.down.isDown) {
                     direction.y += 1;
+                    this.play('walk_down', true);
                 }
                 if (this.cursors.left.isDown) {
                     direction.x -= 1;
+                    this.play('walk_side', true).setFlipX(true);
                 }
                 else if (this.cursors.right.isDown) {
                     direction.x += 1;
+                    this.play('walk_side', true).setFlipX(false);
+                }
+                
+                if(this.body.velocity.x === 0 && this.body.velocity.y === 0){
+                    this.play('idle', true);
                 }
                 direction.normalize();
                 this.body.setVelocity(direction.x * this.speed, direction.y * this.speed)
@@ -74,7 +127,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             dashControl: () => {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
                     this.initDash();
-                } 
+                }
             },
 
             // pauseGame: () => {
@@ -107,27 +160,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        
-        if(!this.isDashing)
-        {
+
+        if (!this.isDashing) {
             this.controls.movementControl();
             this.controls.dashControl();
-        } 
+        }
     }
-    
-    
-    initDash()
-    {
+
+
+    initDash() {
         let dashDirection = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
         dashDirection.normalize();
-        
+
         this.body.setVelocity(dashDirection.x * this.dashSpeed, dashDirection.y * this.dashSpeed);
-        
+
         // Cooldown del dash, deberiamos ponerlo como variable
         this.isDashing = true;
         this.scene.time.delayedCall(200, function () {
-                this.isDashing = false;
-            }, [], this);
+            this.isDashing = false;
+        }, [], this);
     }
-            
+
 }

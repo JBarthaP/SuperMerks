@@ -28,9 +28,10 @@ export default class Level extends Phaser.Scene {
         this.stars = 10;
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
-        this.player.setDepth(2)
+        this.player.setDepth(1);
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemy = new Enemy(this, 0,0, this.player)
+        this.enemy = new Enemy(this, 50,50, this.player)
+        this.enemy.setDepth(1);
 
         this.initMap()
     }
