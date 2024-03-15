@@ -117,7 +117,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                     this.play('walk_side', true).setFlipX(false);
                 }
                 else {
-                    // this.play('idle');
+                    this.play('idle', true);
                 }
                 direction.normalize();
                 this.body.setVelocity(direction.x * this.speed, direction.y * this.speed)
