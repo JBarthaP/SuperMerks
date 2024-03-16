@@ -4,7 +4,7 @@ import Enemy from './enemy.js';
 import Phaser from 'phaser'
 import EnemyManager from './enemyManager.js';
 import Laser from './laser.js';
-
+import Shooter from './shooter.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -45,6 +45,10 @@ export default class Level extends Phaser.Scene {
                 console.log("SE ESTAN CHOCANDO")
             }
 		});
+        this.shooter = new Shooter(this, 1135, 435, 'left');
+        this.shooter2 = new Shooter(this, 15, 212, 'right');
+        this.shooter3 = new Shooter(this, 433, 18, 'down');
+        this.shooter4 = new Shooter(this, 851, 596, 'top');
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});
@@ -117,7 +121,6 @@ export default class Level extends Phaser.Scene {
         this.objects = this.map.createLayer('capa6', tiles2);
         this.objects2 = this.map.createLayer('capa7', tiles2);
         this.objects3 = this.map.createLayer('capa8', tiles2);
-        this.shooter = this.map.createLayer('capa9', tiles2);
 
         this.walllayer.setCollisionBetween(1, 5000);
         this.walllayer2.setCollisionBetween(1, 5000);
