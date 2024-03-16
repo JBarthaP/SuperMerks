@@ -18,11 +18,11 @@ import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
 import lasersprite from '../assets/sprites/lasers/lasersprite2.png'
 import laserspritevert from '../assets/sprites/lasers/laserspriteVert.png'
-import spritesheet_d from '../assets/sprites/lasers/spritesheet_libro.png'
-import spritesheet_c from '../assets/sprites/lasers/spritesheet_unity.png'
-import spritesheet_b from '../assets/sprites/lasers/spritesheet_teclado.png'
-import spritesheet_a from '../assets/sprites/lasers/spritesheet_vscode.png'
-import spritesheet_s from '../assets/sprites/lasers/spritesheet_domjudge.png'
+import spritesheet_d from '../assets/sprites/spritesheet_libro.png'
+import spritesheet_c from '../assets/sprites/spritesheet_unity.png'
+import spritesheet_b from '../assets/sprites/spritesheet_teclado.png'
+import spritesheet_a from '../assets/sprites/spritesheet_vscode.png'
+import spritesheet_s from '../assets/sprites/spritesheet_domjudge.png'
 
 
 /**
