@@ -91,7 +91,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         //Keys
         this.cursors = this.scene.input.keyboard.addKeys({
-            up: Phaser.Input.Keyboard.KeyCodes.W,
+            up: Phaser.Input.Keyboard.KeyCodes.W ,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D
@@ -100,10 +100,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         //Estados jugador
         this.isDashing = false
+        this.canDash = true
+        this.isInmune = false
 
         //Player data
         this.dashSpeed = 350
         this.speed = 250;
+        this.dashCooldownTime = 2000;
+        this.timerDash = 0
+        this.invulnerabiltyDuration = 1000
 
         //Choose controls
         this.handleControls()
@@ -156,7 +161,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             },
 
             dashControl: () => {
-                if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+                if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
                     this.play('dash', true);
                 }
@@ -176,8 +181,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     hitPlayer(dmg) {
-        this.score -= dmg;
-        this.updateScore()
+        if(!this.isInmune)
+        {
+            this.score -= dmg;
+            this.updateScore()
+            this.isInmune = true;
+            this.scene.tweens.add({
+                targets: this,
+                alpha: {from:1, to: 0},
+                duration: this.invulnerabiltyDuration,
+                loop: 1,
+                ease: 'Sine.easeInSine',
+                yoyo: true,
+                onComplete: ()=>{
+                    this.isInmune = false
+    
+                }
+            })
+        }
     }
 
     addPoints() {
@@ -195,15 +216,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
+        if(!this.canDash){
+            this.timerDash += dt
+            if(this.timerDash >= this.dashCooldownTime) {
+                this.canDash = true
+                this.timerDash = 0;
 
+            }
+        }
         if (!this.isDashing) {
             this.controls.movementControl();
-            this.controls.dashControl();
+            this.controls.dashControl()
+
         }
     }
 
 
     initDash() {
+        this.canDash = false
         let dashDirection = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
         dashDirection.normalize();
 
