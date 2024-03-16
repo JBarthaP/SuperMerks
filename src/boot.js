@@ -18,6 +18,11 @@ import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
 import lasersprite from '../assets/sprites/lasers/lasersprite2.png'
 import laserspritevert from '../assets/sprites/lasers/laserspriteVert.png'
+import spritesheet_d from '../assets/sprites/lasers/spritesheet_libro.png'
+import spritesheet_c from '../assets/sprites/lasers/spritesheet_unity.png'
+import spritesheet_b from '../assets/sprites/lasers/spritesheet_teclado.png'
+import spritesheet_a from '../assets/sprites/lasers/spritesheet_vscode.png'
+import spritesheet_s from '../assets/sprites/lasers/spritesheet_domjudge.png'
 
 
 /**
@@ -63,7 +68,12 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('lasersprite', lasersprite, { frameWidth: 548, frameHeight: 16 });
     this.load.spritesheet('laserspritever', laserspritevert, { frameWidth: 16, frameHeight: 272 });
 
-
+    //powerUps
+    this.load.spritesheet('spritesheet_d', spritesheet_d, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('spritesheet_c', spritesheet_c, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('spritesheet_b', spritesheet_b, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('spritesheet_a', spritesheet_a, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('spritesheet_s', spritesheet_s, { frameWidth: 64, frameHeight: 64 });
   }
 
   /**

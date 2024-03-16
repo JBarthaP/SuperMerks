@@ -31,11 +31,11 @@ export default class ScoreManager {
     assignObjectsToCap()
     {
         this.objectsDict = {
-            [PUNTUACION.D]: 'placeholder',
-            [PUNTUACION.C]: 'placeholder',
-            [PUNTUACION.B]: 'placeholder',
-            [PUNTUACION.A]: 'placeholder',
-            [PUNTUACION.S]: 'placeholder',
+            [PUNTUACION.D]: {texture: 'spritesheet_d', frames: 7},
+            [PUNTUACION.C]: {texture: 'spritesheet_c', frames: 8},
+            [PUNTUACION.B]: {texture: 'spritesheet_b', frames: 12},
+            [PUNTUACION.A]: {texture: 'spritesheet_a', frames: 8},
+            [PUNTUACION.S]: {texture: 'spritesheet_s', frames: 10},
         }
     }
 
