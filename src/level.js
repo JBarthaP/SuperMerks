@@ -34,7 +34,6 @@ export default class Level extends Phaser.Scene {
         this.enemyManager = new EnemyManager(this,4, this.player)
         this.enemyManager.fillPool()
         this.initMap()
-        this.spawnEnemies = false;
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});

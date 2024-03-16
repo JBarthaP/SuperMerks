@@ -73,7 +73,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.play('idle');
         this.lastDirection = new Phaser.Math.Vector2(0,1);
 
-        this.score = 0;
+        this.score = 5;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
@@ -84,7 +84,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.width = this.body.width / 2.2;
         this.body.height = this.body.height / 1.5;
         // Esta label es la UI en la que pondremos la puntuación del jugador
-        this.label = this.scene.add.text(10, 10, "");
+        this.label = this.scene.add.text(10, 10, "").setDepth(2);
 
         //Propiedades player
         this.body.allowGravity = false;
@@ -177,7 +177,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     hitPlayer(dmg) {
         this.score -= dmg;
-        updateScore()
+        this.updateScore()
     }
 
     addPoints() {

@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import Player from './player';
 
 
 
@@ -15,6 +16,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       //Bullets vars
       this.direction = direction;
       this.speed = speed;
+      this.damage = 0.05
   }
 
   preUpdate(t,dt) {
@@ -22,6 +24,10 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       // Actualizar la posición de la bala en cada fotograma
       this.x += this.direction.x * this.speed;
       this.y += this.direction.y * this.speed;
+      if (this.scene.physics.overlap(this.scene.player, this)) {
+        this.scene.player.hitPlayer(0.5)
+        this.destroy();
+      }      
   }
 
   hitCollisionPlayer()
