@@ -18,11 +18,15 @@ import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
 import lasersprite from '../assets/sprites/lasers/lasersprite2.png'
 import laserspritevert from '../assets/sprites/lasers/laserspriteVert.png'
+<<<<<<< Updated upstream
 import spritesheet_d from '../assets/sprites/spritesheet_libro.png'
 import spritesheet_c from '../assets/sprites/spritesheet_unity.png'
 import spritesheet_b from '../assets/sprites/spritesheet_teclado.png'
 import spritesheet_a from '../assets/sprites/spritesheet_vscode.png'
 import spritesheet_s from '../assets/sprites/spritesheet_domjudge.png'
+=======
+import shooter from '../assets/sprites/disparador.png'
+>>>>>>> Stashed changes
 
 
 /**
@@ -63,6 +67,7 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('pause_button', pause_button, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('shooter', shooter, { frameWidth: 32, frameHeight: 32 });
 
     //lasers
     this.load.spritesheet('lasersprite', lasersprite, { frameWidth: 548, frameHeight: 16 });
