@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 
 export default class Laser extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, dir) {
+    constructor(scene, x, y, dir, group) {
         super(scene, x, y, 'laser');
 
         this.scene.add.existing(this);
@@ -11,6 +11,8 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.setScale(2,1)
         this.setDepth(1);
 
+        this.group = group
+        this.completeVisible = false
 
         this.scene.anims.create({
             key: 'laseranim',
@@ -44,7 +46,15 @@ export default class Laser extends Phaser.GameObjects.Sprite {
             this.body.setSize(547)
             this.body.setOffset(1, 0)
         }
+    }
 
+    initLaser(){
+        this.despawn = this.scene.time.addEvent({
+			delay: 5000,
+			callback: this.powerOff,
+			callbackScope: this,
+            // startAt: 1000
+		});
 
         this.scene.tweens.add({
             targets: this,
@@ -54,14 +64,14 @@ export default class Laser extends Phaser.GameObjects.Sprite {
             ease: 'Sine.easeInSine',
             yoyo: true,
             onComplete: ()=>{
-
+                this.completeVisible = true
             }
         })
+    }
 
-        setTimeout(() => {
-            this.destroy(false)
-        }, 10000);
-
+    powerOff(){
+        this.body.checkCollision.none = true
+        this.group.killAndHide(this)
     }
 
 }
