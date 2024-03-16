@@ -91,26 +91,27 @@ export default class Level extends Phaser.Scene {
         this.groundLayer = this.map.createLayer('capa1', tiles);
         this.walllayer = this.map.createLayer('capa2', tiles);
         this.walllayer2 = this.map.createLayer('capa3', tiles);
-        this.objects = this.map.createLayer('capa4', tiles2);
-        this.objects2 = this.map.createLayer('capa5', tiles2);
-        this.objects3 = this.map.createLayer('capa6', tiles2);
-        this.objects4 = this.map.createLayer('capa7', tiles2);
-        this.objects5 = this.map.createLayer('capa8', tiles2);
+        this.boxes = this.map.createLayer('capa4', tiles2);
+        this.tables = this.map.createLayer('capa5', tiles2);
+        this.objects = this.map.createLayer('capa6', tiles2);
+        this.objects2 = this.map.createLayer('capa7', tiles2);
+        this.objects3 = this.map.createLayer('capa8', tiles2);
+        this.shooter = this.map.createLayer('capa9', tiles2);
 
-
-        this.objects.setCollisionBetween(1, 1000);
-        this.objects2.setCollisionBetween(1, 1000);
-        this.objects3.setCollisionBetween(1, 1000);
-        this.objects4.setCollisionBetween(1, 1000);
-        this.objects5.setCollisionBetween(1, 1000);
-        this.groundLayer.setCollisionBetween(1, 1000);
         this.walllayer.setCollisionBetween(1, 1000);
         this.walllayer2.setCollisionBetween(1, 1000);
+        this.boxes.setCollisionBetween(1, 1000);
+        this.tables.setCollisionBetween(1, 1000);
+        this.objects.setCollisionBetween(1, 1000);
+        this.objects2.setCollisionBetween(1, 1000);
 
-        this.physics.add.collider(this.player, this.objects);
-        this.physics.add.collider(this.player, this.objects2);
+        this.physics.add.collider(this.player, this.walllayer);
+        this.physics.add.collider(this.player, this.walllayer2);
+        this.physics.add.collider(this.player, this.boxes);
+        this.physics.add.collider(this.player, this.tables);
         this.physics.add.collider(this.player, this.objects3);
         this.physics.add.collider(this.player, this.objects4);
-        this.physics.add.collider(this.player, this.groundLayer);
+        this.physics.add.collider(this.player, this.objects5);
+        this.physics.add.collider(this.player, this.objects6);
     }
 }

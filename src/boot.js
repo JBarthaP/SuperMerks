@@ -4,7 +4,7 @@ import Phaser from 'phaser'
 import platform from '../assets/sprites/platform.png'
 import base from '../assets/sprites/base.png'
 import star from '../assets/sprites/star.png'
-import tileset from '../assets/tilesets/tileset x1.png'
+import tileset from '../assets/tilesets/tileset_x1.png'
 import map from  '../assets/maps/mapa.json'
 import player from '../assets/sprites/player1.png'
 import laser from '../assets/sprites/laser.png'
@@ -38,8 +38,10 @@ export default class Boot extends Phaser.Scene {
   preload() {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.tilemapTiledJSON('mapa', map);
+
     this.load.image('tilesmapa', tileset);
     this.load.image('tilesmapa2', tileset2);
+    
     this.load.audio('mondongo', mondongo)
     this.load.audio('intro_music', intro_music);
     this.load.audio('body_music', body_music);
