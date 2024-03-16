@@ -31,16 +31,19 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
         //Who to shoot
         this.target = player
+
         //Propiedades enemy
-        this.body.allowGravity = false;
 
         //Estados jugador
         this.isShooting = false
 
         //Player data
-        this.cooldown = 0.5
-        this.cooldownDuration = 1000;
+        this.cooldown = 0
+        this.cooldownDuration = 6000;
         // this.speed = 400;
+
+        //Bullets
+        this.bulletSpeed = 0.4
 
         this.targetPoint = new Phaser.Math.Vector2()
 
@@ -58,20 +61,11 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
             volume: 0.15,
             loop: false
         }).play();
-        const direction = Phaser.Math.Vector2();
-        // const bullet = new Bullet(this.scene, this.x, this.y, 'bala', direction, 50);
-
-        // this.scene.sound.add("mondongo", {
-        //     volume: 0.15,
-        //     loop: false
-        // }).play();
+        const direction = new Phaser.Math.Vector2(this.targetPoint.x - this.x, this.targetPoint.y - this.y).normalize();
+        const bullet = new Bullet(this.scene, this.x, this.y, direction, this.bulletSpeed, this.player);
         
     }
     
-    handleCollision(ray, player) {
-        console.log('El jugador ha sido golpeado por el rayo.');
-        // Aquí puedes agregar la lógica para manejar la colisión
-    }
     
     ramdomCoords(max, min){
         let x = 0
@@ -100,15 +94,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
         
-        // Actualizar el cooldown del enemigo
         this.cooldown -= dt;
 
-        // Si el cooldown ha terminado y podemos disparar
         if (this.cooldown <= 0) {
             const coords = this.getCoordsPlayer()
             this.targetPoint.set(coords.x, coords.y)
             this.shoot();
-            this.cooldown = this.cooldownDuration; // Restablecer el cooldown
+            this.cooldown = this.cooldownDuration; 
         }
     }
 

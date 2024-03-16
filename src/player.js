@@ -79,7 +79,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
         this.bodyOffsetWidth = this.body.width / 3.6;
-        this.bodyOffsetHeight = this.body.height / 3.8;
+        this.bodyOffsetHeight = this.body.height / 5;
         this.body.setOffset(this.bodyOffsetWidth, this.bodyOffsetHeight);
         this.body.width = this.body.width / 2.2;
         this.body.height = this.body.height / 1.5;
