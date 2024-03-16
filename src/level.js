@@ -2,6 +2,7 @@ import Platform from './platform.js';
 import Player from './player.js';
 import Enemy from './enemy.js';
 import Phaser from 'phaser'
+import EnemyManager from './enemyManager.js';
 
 
 /**
@@ -30,10 +31,10 @@ export default class Level extends Phaser.Scene {
         this.player = new Player(this, 200, 300);
         this.player.setDepth(1);
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemy = new Enemy(this, 50, 50, this.player)
-        this.enemy.setDepth(1);
-
+        this.enemyManager = new EnemyManager(this,4, this.player)
+        this.enemyManager.fillPool()
         this.initMap()
+        this.spawnEnemies = false;
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});
@@ -50,6 +51,9 @@ export default class Level extends Phaser.Scene {
         });
     }
 
+    update() {
+        this.enemyManager.spawnRandomEnemy()
+    }
     /**
      * Genera una estrella en una de las bases del escenario
      * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella

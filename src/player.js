@@ -78,6 +78,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         // Queremos que el jugador no se salga de los límites del mundo
         this.body.setCollideWorldBounds();
+        this.bodyOffsetWidth = this.body.width / 3.6;
+        this.bodyOffsetHeight = this.body.height / 3.8;
+        this.body.setOffset(this.bodyOffsetWidth, this.bodyOffsetHeight);
+        this.body.width = this.body.width / 2.2;
+        this.body.height = this.body.height / 1.5;
         // Esta label es la UI en la que pondremos la puntuación del jugador
         this.label = this.scene.add.text(10, 10, "");
 

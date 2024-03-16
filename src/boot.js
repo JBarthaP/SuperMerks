@@ -7,6 +7,7 @@ import star from '../assets/sprites/star.png'
 import tileset from '../assets/tilesets/tileset x1.png'
 import map from  '../assets/maps/mapa.json'
 import player from '../assets/sprites/player1.png'
+import laser from '../assets/sprites/laser.png'
 import player_dash from '../assets/sprites/player_dash.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
@@ -46,6 +47,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('platform', platform);
     this.load.image('base', base);
     this.load.image('star', star);
+    this.load.image('laser', laser);
     this.load.image('longray', longray);
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
