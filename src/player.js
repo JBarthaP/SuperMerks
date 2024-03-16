@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import ScoreManager from './scoreManager';
 
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
@@ -83,8 +84,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setOffset(this.bodyOffsetWidth, this.bodyOffsetHeight);
         this.body.width = this.body.width / 2.2;
         this.body.height = this.body.height / 1.5;
-        // Esta label es la UI en la que pondremos la puntuación del jugador
-        this.label = this.scene.add.text(10, 10, "").setDepth(2);
 
         //Propiedades player
         this.body.allowGravity = false;
@@ -115,7 +114,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.controls = this.keyboardControls
         //If gamepad controls
 
-        this.updateScore();
+
+        this.scoreManager = new ScoreManager(scene,this)
+
     }
 
     handleControls() {
@@ -163,6 +164,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             dashControl: () => {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
+                    this.scoreManager.addPoints(11)
                     this.play('dash', true);
                 }
             },
@@ -173,18 +175,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
-    /**
-     * Actualiza la UI con la puntuación actual
-     */
-    updateScore() {
-        this.label.text = 'Score: ' + this.score;
-    }
 
     hitPlayer(dmg) {
         if(!this.isInmune)
         {
-            this.score -= dmg;
-            this.updateScore()
+            this.scoreManager.reduceScore(dmg)
             this.isInmune = true;
             this.scene.tweens.add({
                 targets: this,
@@ -199,11 +194,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 }
             })
         }
-    }
-
-    addPoints() {
-        this.score++;
-        this.updateScore();
     }
 
 
