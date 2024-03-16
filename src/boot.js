@@ -11,6 +11,7 @@ import player_dash from '../assets/sprites/player_dash.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
 import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
+import longray from '../assets/sprites/longray.png'
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -40,6 +41,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('platform', platform);
     this.load.image('base', base);
     this.load.image('star', star);
+    this.load.image('longray', longray);
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });

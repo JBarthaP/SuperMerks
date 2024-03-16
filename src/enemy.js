@@ -32,11 +32,11 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.target = player
         //Propiedades enemy
         this.body.allowGravity = false;
-        
+
         //Estados jugador
         this.isShooting = false
         this.isShootingCooldown = false
-        
+
         //Player data
         this.cooldown = 0.5
         // this.speed = 400;
@@ -48,11 +48,10 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.targetPoint = new Phaser.Math.Vector2()
 
         // Llama al método shootRay cuando sea necesario
-        // this.timerEvent = scene.time.addEvent({ delay: 3000, callback: this.shoot, callbackScope: this, loop: true });
+        this.timerEvent = scene.time.addEvent({ delay: 3000, callback: this.shoot, callbackScope: this, loop: true });
     }
 
-    shoot(dt)
-    {
+    shoot(dt) {
 
         this.play('teacher_shoot');
         // Dibuja una línea desde el enemigo hasta el jugador
@@ -62,41 +61,38 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.graphics.moveTo(this.x, this.y);
 
         //Esto lo hize yo (pablo) pero cambienlo
-        const progressPoint = Phaser.Math.LinearXY(this.startPoint, this.targetPoint, this.progressLine);
-         this.graphics.lineTo(progressPoint.x, progressPoint.y)
-        // const coords = this.ramdomCoords(1152, 640)
-        // this.graphics.lineTo(coords[0], coords[1]);
+        // const progressPoint = Phaser.Math.LinearXY(this.startPoint, this.targetPoint, this.progressLine);
+        // this.graphics.lineTo(progressPoint.x, progressPoint.y)
+        const coords = this.getCoordsPlayer()
+        this.graphics.lineTo(coords.x, coords.y);
         this.graphics.strokePath();
 
         this.progressLine += dt / this.durationToReach
         // Elimina la línea después de un tiempo
-        if(this.progressLine >= 1)
-        {
+        if (this.progressLine >= 1) {
             this.graphics.clear()
             this.progressLine = 0
             this.isShooting = false
         }
 
-        this.scene.sound.add("mondongo", {
-            volume: 0.15,
-            loop: false
-        }).play();
-        
-    }
-    
-    ramdomCoords(max, min){
-        let x = 0
-        let y = 0;
+        // this.scene.sound.add("mondongo", {
+        //     volume: 0.15,
+        //     loop: false
+        // }).play();
 
-        const first = Math.floor(Math.random() * (1 - 0 + 1) + 0) > 0;
-        if(first){
-            x = Math.floor(Math.random() * (max - min + 1) + min)
-        }else{
-            y = Math.floor(Math.random() * (max - min + 1) + min)
-        }
-
-        return [x, y];
     }
+
+    getCoordsPlayer() {
+        const xCoord = this.target.x;
+        const yCoord = this.target.y;
+        const xOffset = Phaser.Math.Between(-100, 100);
+        const yOffset = Phaser.Math.Between(-100, 100);
+
+        const targetPos = new Phaser.Math.Vector2(xCoord + xOffset, yCoord + yOffset);
+
+        return targetPos;
+    }
+
 
     /**
      * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
@@ -106,19 +102,18 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
      */
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        if(!this.isShooting)
-        {
-            const coords = this.ramdomCoords(1152, 640)
-            this.targetPoint.set(coords[0], coords[1])
+        if (!this.isShooting) {
+            const coords = this.getCoordsPlayer()
+            this.targetPoint.set(coords.x, coords.y)
             this.isShooting = true
-        }
-        else 
-        {
             this.shoot(dt)
         }
+        // else {
+        //     this.shoot(dt)
+        // }
 
     }
-    
-    
-            
+
+
+
 }

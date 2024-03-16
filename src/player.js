@@ -72,6 +72,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         });
         
         this.play('idle');
+        this.lastDirection = new Phaser.Math.Vector2(0,1);
 
         this.score = 0;
         this.scene.add.existing(this);
@@ -97,8 +98,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.isDashing = false
 
         //Player data
-        this.dashSpeed = 800
-        this.speed = 400;
+        this.dashSpeed = 350
+        this.speed = 250;
 
         //Choose controls
         this.handleControls()
@@ -115,11 +116,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
                 if (this.cursors.up.isDown) {
                     direction.y -= 1;
-                    this.play('walk_up', true);
+                    if(!this.cursors.left.isDown && !this.cursors.right.isDown){
+                        this.play('walk_up', true);
+                    }
                 }
                 else if (this.cursors.down.isDown) {
                     direction.y += 1;
-                    this.play('walk_down', true);
+                    if(!this.cursors.left.isDown && !this.cursors.right.isDown){
+                        this.play('walk_down', true);
+                    }
                 }
                 if (this.cursors.left.isDown) {
                     direction.x -= 1;
@@ -131,8 +136,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 }
                 
                 if(this.body.velocity.x === 0 && this.body.velocity.y === 0 && !this.isDashing){
-                    this.play('idle', true);
+                    if(direction.y !== 0){
+                        this.lastDirection = direction;
+                    }else{
+                        if(this.lastDirection.y > 0){
+                            this.play('idle', true);
+                        }else{
+                            this.play('idle_up', true);
+                        }
+                    }
                 }
+
                 direction.normalize();
                 this.body.setVelocity(direction.x * this.speed, direction.y * this.speed)
             },
