@@ -16,6 +16,9 @@ const body_music = require("url:../assets/sounds/body.wav");
 import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
 import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
+import lasersprite from '../assets/sprites/lasers/lasersprite2.png'
+import laserspritevert from '../assets/sprites/lasers/laserspriteVert.png'
+
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -55,6 +58,12 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('pause_button', pause_button, { frameWidth: 64, frameHeight: 64 });
+
+    //lasers
+    this.load.spritesheet('lasersprite', lasersprite, { frameWidth: 548, frameHeight: 16 });
+    this.load.spritesheet('laserspritever', laserspritevert, { frameWidth: 16, frameHeight: 272 });
+
+
   }
 
   /**

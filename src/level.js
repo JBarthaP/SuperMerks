@@ -3,6 +3,7 @@ import Player from './player.js';
 import Enemy from './enemy.js';
 import Phaser from 'phaser'
 import EnemyManager from './enemyManager.js';
+import Laser from './laser.js';
 
 
 /**
@@ -34,6 +35,17 @@ export default class Level extends Phaser.Scene {
         this.enemyManager = new EnemyManager(this,4, this.player)
         this.enemyManager.fillPool()
         this.initMap()
+
+        //horizontal laser
+        this.laser = new Laser(this, 580, 435, false);
+        // this.laser2 = new Laser(this, 580, 599, false);
+        this.laser3 = new Laser(this, 580, 212, false);
+
+        //vertical
+        this.laser4 = new Laser(this, 433, 305, true);
+        this.laser5 = new Laser(this, 851, 310, true);
+
+
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});
