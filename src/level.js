@@ -36,16 +36,15 @@ export default class Level extends Phaser.Scene {
         this.enemyManager.fillPool()
         this.initMap()
 
-        //horizontal laser
-        this.laser = new Laser(this, 580, 435, false);
-        // this.laser2 = new Laser(this, 580, 599, false);
-        this.laser3 = new Laser(this, 580, 212, false);
+        this.lasergroup = this.add.group();
+        this.initLasers();
 
-        //vertical
-        this.laser4 = new Laser(this, 433, 305, true);
-        this.laser5 = new Laser(this, 851, 310, true);
-
-
+        this.physics.add.overlap(this.lasergroup, this.player, (obj1, obj2) => {
+            //Solo le afecta al player si esta completamente visible el rayo
+            if(obj1.completeVisible){
+                console.log("SE ESTAN CHOCANDO")
+            }
+		});
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});
@@ -60,6 +59,15 @@ export default class Level extends Phaser.Scene {
                 loop: true
             }).play();
         });
+
+        this.spawnLaserTimer = this.time.addEvent({
+			delay: 2000,
+			callback: this.spawnLaser,
+			callbackScope: this,
+			loop: true
+		});
+
+        // this.spawnLaser()
     }
 
     update() {
@@ -120,5 +128,35 @@ export default class Level extends Phaser.Scene {
         this.physics.add.collider(this.player, this.walllayer2);
         this.physics.add.collider(this.player, this.groundCollider);
         this.physics.add.collider(this.player, this.objects);
+    }
+
+    initLasers(){
+         //horizontal laser
+         this.laser = new Laser(this, 580, 435, false, this.lasergroup);
+         this.laser3 = new Laser(this, 580, 212, false, this.lasergroup);
+ 
+         //vertical
+         this.laser4 = new Laser(this, 433, 305, true, this.lasergroup);
+         this.laser5 = new Laser(this, 851, 310, true, this.lasergroup);
+
+         this.lasergroup.addMultiple([this.laser, this.laser3, this.laser4, this.laser5]);
+
+         this.lasergroup.children.iterate(c => {
+            this.lasergroup.killAndHide(c);
+            c.body.checkCollision.none = true;
+        });
+    }
+
+
+    spawnLaser(){
+        this.lasergroup.shuffle()
+        let laser = this.lasergroup.getFirstDead()
+
+        if (laser) {
+            laser.initLaser();
+            laser.setActive(true);
+            laser.setVisible(true);
+            laser.body.checkCollision.none = false
+        }
     }
 }
