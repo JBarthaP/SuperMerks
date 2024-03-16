@@ -89,6 +89,7 @@ export default class Level extends Phaser.Scene {
         const tiles2 = mapa.addTilesetImage('pixel-cyberpunk-interior', 'tilesmapa2');
 
         this.groundLayer = this.map.createLayer('capa1', tiles);
+        this.groundCollider = this.map.createLayer('capasuelo', [tiles, tiles2]);
         this.walllayer = this.map.createLayer('capa2', tiles);
         this.walllayer2 = this.map.createLayer('capa3', tiles);
         this.boxes = this.map.createLayer('capa4', tiles2);
@@ -98,20 +99,14 @@ export default class Level extends Phaser.Scene {
         this.objects3 = this.map.createLayer('capa8', tiles2);
         this.shooter = this.map.createLayer('capa9', tiles2);
 
-        this.walllayer.setCollisionBetween(1, 1000);
-        this.walllayer2.setCollisionBetween(1, 1000);
-        this.boxes.setCollisionBetween(1, 1000);
-        this.tables.setCollisionBetween(1, 1000);
-        this.objects.setCollisionBetween(1, 1000);
-        this.objects2.setCollisionBetween(1, 1000);
+        this.walllayer.setCollisionBetween(1, 5000);
+        this.walllayer2.setCollisionBetween(1, 5000);
+        this.groundCollider.setCollisionBetween(1, 5000);
+        this.objects.setCollisionBetween(1, 5000);
 
         this.physics.add.collider(this.player, this.walllayer);
         this.physics.add.collider(this.player, this.walllayer2);
-        this.physics.add.collider(this.player, this.boxes);
-        this.physics.add.collider(this.player, this.tables);
-        this.physics.add.collider(this.player, this.objects3);
-        this.physics.add.collider(this.player, this.objects4);
-        this.physics.add.collider(this.player, this.objects5);
-        this.physics.add.collider(this.player, this.objects6);
+        this.physics.add.collider(this.player, this.groundCollider);
+        this.physics.add.collider(this.player, this.objects);
     }
 }
