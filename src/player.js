@@ -1,4 +1,3 @@
-import Star from './star.ts';
 import Phaser from 'phaser'
 
 /**
@@ -165,20 +164,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     /**
-     * El jugador ha recogido una estrella por lo que este método añade un punto y
-     * actualiza la UI con la puntuación actual.
-     */
-    point() {
-        this.score++;
-        this.updateScore();
-    }
-
-    /**
      * Actualiza la UI con la puntuación actual
      */
     updateScore() {
         this.label.text = 'Score: ' + this.score;
     }
+
+    hitPlayer(dmg) {
+        this.score -= dmg;
+        updateScore()
+    }
+
+    addPoints() {
+        this.score++;
+        this.updateScore();
+    }
+
+
 
     /**
      * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.

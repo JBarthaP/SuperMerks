@@ -79,6 +79,12 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         //     volume: 0.15,
         //     loop: false
         // }).play();
+        
+    }
+    
+    ramdomCoords(max, min){
+        let x = 0
+        let y = 0;
 
     }
 

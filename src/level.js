@@ -18,7 +18,7 @@ export default class Level extends Phaser.Scene {
      */
     constructor() {
         super({ key: 'level' });
-        
+
     }
 
     /**
@@ -30,10 +30,24 @@ export default class Level extends Phaser.Scene {
         this.player = new Player(this, 200, 300);
         this.player.setDepth(1);
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemy = new Enemy(this, 50,50, this.player)
+        this.enemy = new Enemy(this, 50, 50, this.player)
         this.enemy.setDepth(1);
 
         this.initMap()
+
+        //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
+        const intro = this.sound.add('intro_music', {volume: 0.3});
+
+        intro.play();
+
+        let audio_aux = this.sound;
+
+        intro.once('complete', function () {
+            audio_aux.add('body_music', {
+                volume: 0.3,
+                loop: true
+            }).play();
+        });
     }
 
     /**
@@ -63,11 +77,11 @@ export default class Level extends Phaser.Scene {
     }
 
     initMap() {
-		const mapa = this.map = this.make.tilemap({
-			key: 'mapa'
-		});
-        
-		// TILE IMAGE
+        const mapa = this.map = this.make.tilemap({
+            key: 'mapa'
+        });
+
+        // TILE IMAGE
         const tiles = mapa.addTilesetImage('tileset x1', 'tilesmapa');
         const tiles2 = mapa.addTilesetImage('pixel-cyberpunk-interior', 'tilesmapa2');
 
@@ -92,5 +106,5 @@ export default class Level extends Phaser.Scene {
         this.physics.add.collider(this.player, this.objects3);
         this.physics.add.collider(this.player, this.objects4);
         this.physics.add.collider(this.player, this.groundLayer);
-	}
+    }
 }

@@ -10,8 +10,11 @@ import player from '../assets/sprites/player1.png'
 import player_dash from '../assets/sprites/player_dash.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
+const intro_music = require("url:../assets/sounds/intro.wav");
+const body_music = require("url:../assets/sounds/body.wav");
 import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
 import longray from '../assets/sprites/longray.png'
+import pause_button from '../assets/sprites/PauseButton.png'
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -37,6 +40,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image('tilesmapa', tileset);
     this.load.image('tilesmapa2', tileset2);
     this.load.audio('mondongo', mondongo)
+    this.load.audio('intro_music', intro_music);
+    this.load.audio('body_music', body_music);
     this.load.setPath('assets/sprites/');
     this.load.image('platform', platform);
     this.load.image('base', base);
@@ -45,6 +50,7 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('pause_button', pause_button, { frameWidth: 64, frameHeight: 64 });
   }
 
   /**
