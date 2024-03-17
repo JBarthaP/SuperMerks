@@ -13,9 +13,12 @@ let config = {
     type: Phaser.AUTO,
     width: 1152,
     height: 640,
+    renderer: Phaser.CANVAS,
+    parent: 'CanvasDiv',
     scale: {
         // mode: Phaser.Scale.FIT,  
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        isPortrait: true
     },
     pixelArt: true,
     scene: [Boot, mainMenuScene, Level, Lose, Win],

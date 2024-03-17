@@ -124,7 +124,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
-            k: Phaser.Input.Keyboard.KeyCodes.K
+            k: Phaser.Input.Keyboard.KeyCodes.ENTER
         })
         this.keySpace = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -206,7 +206,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             },
 
             dashControl: () => {
-                if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
+                if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash && !this.isAttacking) {
                     this.initDash();
                     this.scene.sound.add("dash_sound", {
                         volume: 0.15,
