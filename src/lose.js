@@ -30,7 +30,7 @@ export default class Lose extends Phaser.Scene {
       this.scene.start("mainMenuScene");
     });
 
-    this.sound.add('finish_sound', {
+    this.sound.add('lose_sound', {
       volume: 0.15
     }).play();
 
