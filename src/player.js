@@ -97,6 +97,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 || this.anims.currentAnim.key === 'playerAttackSide') {
                 console.log("ANIMACION DE ATTACK Acabada")
                 this.isAttacking = false
+                this.body.setSize(this.defaultSize.width, this.defaultSize.height);
             }
         });
 
@@ -148,6 +149,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         //If gamepad controls
 
         this.scoreManager = new ScoreManager(scene, this)
+        this.defaultSize = {width: this.body.width, height: this.body.height};
 
     }
 
@@ -259,15 +261,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         if (direction.x !== 0) {
             this.play('playerAttackSide', true)
+            this.body.setSize(50, 42);
         } else if (direction.y > 0) {
             this.play('playerAttackDown', true)
+            this.body.setSize(42, 60);
+
         } else if (direction.y < 0) {
             this.play('playerAttackUp', true)
+            this.body.setSize(42, 60);
         } else {
             if (this.lastDirection.y < 0) {
                 this.play('playerAttackUp', true)
+                this.body.setSize(42, 60);
             } else {
                 this.play('playerAttackDown', true)
+                this.body.setSize(42, 60);
+
             }
         }
 

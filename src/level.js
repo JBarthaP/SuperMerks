@@ -66,7 +66,7 @@ export default class Level extends Phaser.Scene {
 
         this.lastMark = this.player.scoreManager.currentMark
         this.movingLasers = false
-        this.updateTimers(this.lastMark);
+        this.updateTimers(this.lastMark);        
     }
 
     update() {
