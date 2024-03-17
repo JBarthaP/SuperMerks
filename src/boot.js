@@ -35,8 +35,13 @@ const dash_sound = require("url:../assets/sounds/dash.wav");
 const damage_sound = require("url:../assets/sounds/damage.mp3");
 import mainMenu from '../assets/sprites/background.png'
 import table_back from '../assets/sprites/backTable.png'
-import nota_s from '../assets/sprites/nota1.png'
 import nota_f from '../assets/sprites/nota6.png'
+import nota_d from '../assets/sprites/nota5.png'
+import nota_c from '../assets/sprites/nota4.png'
+import nota_b from '../assets/sprites/nota3.png'
+import nota_a from '../assets/sprites/nota2.png'
+import nota_s from '../assets/sprites/nota1.png'
+
 
 
 /**
@@ -106,8 +111,11 @@ export default class Boot extends Phaser.Scene {
 
     //endMenu (win/lose)
     this.load.image('nota_s', nota_s);
+    this.load.image('nota_a', nota_a);
+    this.load.image('nota_b', nota_b);
+    this.load.image('nota_c', nota_c);
+    this.load.image('nota_d', nota_d);
     this.load.image('nota_f', nota_f);
-
   }
 
   /**

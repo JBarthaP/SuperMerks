@@ -12,6 +12,7 @@ export const PUNTUACION = {
     S: 100
 };
 
+
 export default class ScoreManager {
 
     constructor(scene, player) {
@@ -21,6 +22,7 @@ export default class ScoreManager {
         this.currentMark = PUNTUACION.F
         this.numberHitsInF = 0
         this.assignObjectsToCap()
+        this.assignTextures()
         this.actualPickUp;
         this.positionsPickUps = [
             new Phaser.Math.Vector2(200, 100),
@@ -30,9 +32,21 @@ export default class ScoreManager {
             new Phaser.Math.Vector2(900, 500)]
 
         //Provisional
-        this.label = this.scene.add.text(10, 10, "").setDepth(2);
-        this.labelNota = this.scene.add.text(10, 60, "").setDepth(2);
+        // this.label = this.scene.add.text(10, 10, "").setDepth(2);
+        // this.labelNota = this.scene.add.text(10, 60, "").setDepth(2);
+        this.markExam = this.scene.add.sprite(100,50, this.marksDict[this.currentMark]).setDepth(2)
         this.updateScore()
+    }
+
+    assignTextures() {
+        this.marksDict = {
+            [PUNTUACION.F]: 'nota_f',
+            [PUNTUACION.D]: 'nota_d',
+            [PUNTUACION.C]: 'nota_c',
+            [PUNTUACION.B]: 'nota_b',
+            [PUNTUACION.A]: 'nota_a',
+            [PUNTUACION.S]: 'nota_s'
+        }
     }
 
     assignObjectsToCap() {
@@ -115,8 +129,9 @@ export default class ScoreManager {
     }
 
     updateScore() {
-        this.label.text = 'Score: ' + this.score;
-        this.labelNota.text = 'Score: ' + this.currentMark;
+        // this.label.text = 'Score: ' + this.score;
+        // this.labelNota.text = 'Score: ' + this.currentMark;
+        this.markExam.setTexture(this.marksDict[this.currentMark])
 
     }
 
