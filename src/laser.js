@@ -69,7 +69,7 @@ export default class Laser extends Phaser.GameObjects.Sprite {
 
     trigger(moving) {
         this.scene.sound.add('laser_sound', {
-            volume: 0.5,
+            volume: 0.15,
             loop: false
         }).play();
         this.despawn = this.scene.time.addEvent({

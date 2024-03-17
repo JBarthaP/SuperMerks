@@ -209,7 +209,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
                     this.scene.sound.add("dash_sound", {
-                        volume: 0.75,
+                        volume: 0.35,
                         loop: false
                     }).play();
                     this.play('dash', true);
