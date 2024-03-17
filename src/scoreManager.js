@@ -117,7 +117,7 @@ export default class ScoreManager {
 
     reduceScore(points) {
         const newScore = this.score - points;
-        if (newScore !== PUNTUACION.F) {
+        if (newScore > PUNTUACION.F) {
 
             if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
                 this.currentMark = PUNTUACION.F
