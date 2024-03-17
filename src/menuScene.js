@@ -6,13 +6,11 @@ export default class mainMenuScene extends Phaser.Scene {
 
     init(data) {
         console.log(data);
-        console.log("Donete");
-
     }
 
     create() {
-        this.add.image(60, 0, "background_img").setOrigin(0).setDepth(0);
-        let tableBack = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, "table_back").setScale(1.5);
+        this.add.image(0, 0, "background_img").setOrigin(0).setDepth(0);
+        let tableBack = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, "table_back").setScale(0.75);
 
         this.mute_button = this.add.image(this.game.renderer.width - 150, this.game.renderer.height - 100, "mute_button").setScale(0.3).setVisible(false);
         this.sound_button = this.add.image(this.game.renderer.width - 150, this.game.renderer.height - 100, "sound_button").setScale(0.3);

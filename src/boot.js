@@ -35,6 +35,8 @@ const dash_sound = require("url:../assets/sounds/dash.wav");
 const damage_sound = require("url:../assets/sounds/damage.mp3");
 import mainMenu from '../assets/sprites/background.png'
 import table_back from '../assets/sprites/backTable.png'
+import nota_s from '../assets/sprites/nota1.png'
+import nota_f from '../assets/sprites/nota6.png'
 
 
 /**
@@ -101,6 +103,11 @@ export default class Boot extends Phaser.Scene {
     this.load.image('sound_button', sound_button);
     this.load.spritesheet('play_button', play_button, { frameWidth: 128, frameHeight: 128 });
     this.load.audio('wrong_answer_music', wrong_answer_music);
+
+    //endMenu (win/lose)
+    this.load.image('nota_s', nota_s);
+    this.load.image('nota_f', nota_f);
+
   }
 
   /**
@@ -108,6 +115,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('level');
+    this.scene.start('mainMenuScene');
   }
 }
