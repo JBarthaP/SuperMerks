@@ -25,6 +25,7 @@ import spritesheet_a from '../assets/sprites/spritesheet_vscode.png'
 import spritesheet_s from '../assets/sprites/spritesheet_domjudge.png'
 import shooter from '../assets/sprites/disparador.png'
 const dash_sound = require("url:../assets/sounds/dash.wav");
+const damage_sound = require("url:../assets/sounds/damage.mp3");
 
 
 /**
@@ -63,6 +64,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('longray', longray);
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.audio('dash_sound', dash_sound);
+    this.load.audio('damage_sound', damage_sound);
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('pause_button', pause_button, { frameWidth: 64, frameHeight: 64 });
