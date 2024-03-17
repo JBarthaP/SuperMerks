@@ -34,8 +34,20 @@ export default class ScoreManager {
         //Provisional
         // this.label = this.scene.add.text(10, 10, "").setDepth(2);
         // this.labelNota = this.scene.add.text(10, 60, "").setDepth(2);
-        this.markExam = this.scene.add.sprite(100,50, this.marksDict[this.currentMark]).setDepth(2)
+        this.markExam = this.scene.add.sprite(100, 50, this.marksDict[this.currentMark]).setDepth(2)
+        this.spritesheet_a = this.scene.add.sprite(155, 100, "spritesheet_a").setDepth(2); this.spritesheet_a.setScale(0.3); this.spritesheet_a.setVisible(false)
+        this.spritesheet_b = this.scene.add.sprite(120, 105, "spritesheet_b").setDepth(2); this.spritesheet_b.setScale(0.5); this.spritesheet_b.setVisible(false)
+        this.spritesheet_c = this.scene.add.sprite(80, 105, "spritesheet_c").setDepth(2); this.spritesheet_c.setScale(0.5); this.spritesheet_c.setVisible(false)
+        this.spritesheet_d = this.scene.add.sprite(40, 105, "spritesheet_d").setDepth(2); this.spritesheet_d.setScale(0.5); this.spritesheet_d.setVisible(false)
+        // 40 70 100 135 170
         this.updateScore()
+
+        this.pickUpDict = {
+            spritesheet_d: false,
+            spritesheet_c: false,
+            spritesheet_b: false,
+            spritesheet_a: false
+        }
     }
 
     assignTextures() {
@@ -59,24 +71,37 @@ export default class ScoreManager {
         }
     }
 
+    updatePickUpList(pickupid) {
+
+        this.pickUpDict[pickupid] = true;
+        if (this.pickUpDict["spritesheet_d"]) {
+            this.spritesheet_d.setVisible(true);
+        }
+        if (this.pickUpDict["spritesheet_c"]) {
+            this.spritesheet_c.setVisible(true);
+        }
+        if (this.pickUpDict["spritesheet_b"]) {
+            this.spritesheet_b.setVisible(true);
+        }
+        if (this.pickUpDict["spritesheet_a"]) {
+            this.spritesheet_a.setVisible(true);
+        }
+    }
+
     addPoints(points) {
         const newScore = this.score + points;
         if (this.currentMark === PUNTUACION.F && newScore >= PUNTUACION.D) {
             this.score = PUNTUACION.D
             this.passUpCap(PUNTUACION.D)
-
         } else if (this.currentMark === PUNTUACION.D && newScore >= PUNTUACION.C) {
             this.score = PUNTUACION.C
             this.passUpCap(PUNTUACION.C)
-
         } else if (this.currentMark === PUNTUACION.C && newScore >= PUNTUACION.B) {
             this.score = PUNTUACION.B
             this.passUpCap(PUNTUACION.B)
-
         } else if (this.currentMark === PUNTUACION.B && newScore >= PUNTUACION.A) {
             this.score = PUNTUACION.A
             this.passUpCap(PUNTUACION.A)
-
         } else if (this.currentMark === PUNTUACION.A && newScore >= PUNTUACION.S) {
             this.score = PUNTUACION.S
             this.passUpCap(PUNTUACION.S)
@@ -96,12 +121,20 @@ export default class ScoreManager {
 
             if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
                 this.currentMark = PUNTUACION.F
+                this.spritesheet_d.setVisible(false);
+                this.pickUpDict["spritesheet_d"] = false;
             } else if (this.currentMark === PUNTUACION.C && newScore <= PUNTUACION.C) {
                 this.currentMark = PUNTUACION.D
+                this.spritesheet_c.setVisible(false);
+                this.pickUpDict["spritesheet_c"] = false;
             } else if (this.currentMark === PUNTUACION.B && newScore <= PUNTUACION.B) {
                 this.currentMark = PUNTUACION.C
+                this.spritesheet_b.setVisible(false);
+                this.pickUpDict["spritesheet_b"] = false;
             } else if (this.currentMark === PUNTUACION.A && newScore <= PUNTUACION.A) {
                 this.currentMark = PUNTUACION.B
+                this.spritesheet_a.setVisible(false);
+                this.pickUpDict["spritesheet_a"] = false;
             } else if (this.currentMark === PUNTUACION.S && newScore <= PUNTUACION.S) {
                 this.currentMark = PUNTUACION.A
             }
@@ -132,7 +165,6 @@ export default class ScoreManager {
         // this.label.text = 'Score: ' + this.score;
         // this.labelNota.text = 'Score: ' + this.currentMark;
         this.markExam.setTexture(this.marksDict[this.currentMark])
-
     }
 
     calculatePositionPickUp() {

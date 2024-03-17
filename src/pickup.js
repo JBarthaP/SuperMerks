@@ -10,6 +10,7 @@ export default class PickUp extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this, true);
         this.mark = mark
+        this.spriteAux = sprite
 
         this.scene.anims.create({
             key: sprite,
@@ -29,6 +30,7 @@ export default class PickUp extends Phaser.GameObjects.Sprite {
         super.preUpdate(t, dt);
         if (this.scene.physics.overlap(this.scene.player, this)) {
             this.scene.player.scoreManager.currentMark = this.mark
+            this.scene.player.scoreManager.updatePickUpList(this.spriteAux)
             this.scene.player.scoreManager.updateScore()
             if (this.mark === PUNTUACION.S) {
                 this.scene.player.scoreManager.win()

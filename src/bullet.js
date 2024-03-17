@@ -13,6 +13,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       this.setRotation(direction.angle())
       this.setScale(2)
 
+      this.body.setSize(10)
       //Bullets vars
       this.direction = direction;
       this.speed = speed;
