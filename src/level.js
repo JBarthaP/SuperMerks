@@ -45,10 +45,7 @@ export default class Level extends Phaser.Scene {
                 console.log("SE ESTAN CHOCANDO")
             }
 		});
-        this.shooter = new Shooter(this, 1135, 435, 'left');
-        this.shooter2 = new Shooter(this, 15, 212, 'right');
-        this.shooter3 = new Shooter(this, 433, 18, 'down');
-        this.shooter4 = new Shooter(this, 851, 596, 'top');
+
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
         const intro = this.sound.add('intro_music', {volume: 0.3});
@@ -65,7 +62,7 @@ export default class Level extends Phaser.Scene {
         });
 
         this.spawnLaserTimer = this.time.addEvent({
-			delay: 2000,
+			delay: 5000,
 			callback: this.spawnLaser,
 			callbackScope: this,
 			loop: true
@@ -134,17 +131,26 @@ export default class Level extends Phaser.Scene {
     }
 
     initLasers(){
-         //horizontal laser
-         this.laser = new Laser(this, 580, 435, false, this.lasergroup);
-         this.laser3 = new Laser(this, 580, 212, false, this.lasergroup);
+        // Crear shooters
+        this.shooter_left = new Shooter(this, 1135, 435, 'left');
+        this.shooter_left.setRotation(Phaser.Math.DegToRad(90));
+        this.shooter_right = new Shooter(this, 15, 212, 'right');
+        this.shooter_right.setRotation(Phaser.Math.DegToRad(-90));
+        this.shooter_down = new Shooter(this, 433, 18, 'down');
+        this.shooter_top = new Shooter(this, 851, 596, 'top');
+        this.shooter_top.setRotation(Phaser.Math.DegToRad(180));
+
+        //horizontal laser
+        this.laser = new Laser(this, 580, 435, false, this.lasergroup, this.shooter_left);
+        this.laser3 = new Laser(this, 580, 212, false, this.lasergroup, this.shooter_right);
  
-         //vertical
-         this.laser4 = new Laser(this, 433, 305, true, this.lasergroup);
-         this.laser5 = new Laser(this, 851, 310, true, this.lasergroup);
+        //vertical
+        this.laser4 = new Laser(this, 433, 305, true, this.lasergroup, this.shooter_down);
+        this.laser5 = new Laser(this, 851, 310, true, this.lasergroup, this.shooter_top);
 
-         this.lasergroup.addMultiple([this.laser, this.laser3, this.laser4, this.laser5]);
+        this.lasergroup.addMultiple([this.laser, this.laser3, this.laser4, this.laser5]);
 
-         this.lasergroup.children.iterate(c => {
+        this.lasergroup.children.iterate(c => {
             this.lasergroup.killAndHide(c);
             c.body.checkCollision.none = true;
         });
@@ -157,9 +163,6 @@ export default class Level extends Phaser.Scene {
 
         if (laser) {
             laser.initLaser();
-            laser.setActive(true);
-            laser.setVisible(true);
-            laser.body.checkCollision.none = false
         }
     }
 }
