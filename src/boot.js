@@ -44,6 +44,8 @@ import nota_s from '../assets/sprites/nota1.png'
 
 const shoot_sound = require("url:../assets/sounds/laser_shoot.wav");
 const laser_sound = require("url:../assets/sounds/laser_beam.wav");
+import full_screen from '../assets/sprites/full_screen.png'
+import window_mode from '../assets/sprites/window_mode.png'
 
 
 /**
@@ -110,8 +112,11 @@ export default class Boot extends Phaser.Scene {
     this.load.image('table_back', table_back);
     this.load.image('mute_button', mute_button);
     this.load.image('sound_button', sound_button);
+    this.load.image('full_screen', full_screen);
+    this.load.image('window_mode', window_mode);
     this.load.spritesheet('play_button', play_button, { frameWidth: 128, frameHeight: 128 });
     this.load.audio('wrong_answer_music', wrong_answer_music);
+
 
     //endMenu (win/lose)
     this.load.image('nota_s', nota_s);
