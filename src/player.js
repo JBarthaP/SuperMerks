@@ -164,7 +164,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
             dashControl: () => {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
-                    this.scoreManager.addPoints(11)
+                    this.scoreManager.addPoints(11);
+                    this.scene.sound.add("dash_sound", {
+                        volume: 0.85,
+                        loop: false
+                    }).play();
                     this.play('dash', true);
                 }
             },
