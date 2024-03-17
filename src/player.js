@@ -209,7 +209,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
                     this.scene.sound.add("dash_sound", {
-                        volume: 0.35,
+                        volume: 0.15,
                         loop: false
                     }).play();
                     this.play('dash', true);
@@ -238,7 +238,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.scoreManager.reduceScore(dmg)
             this.isInmune = true;
             this.scene.sound.add("damage_sound", {
-                volume: 0.30,
+                volume: 0.15,
                 loop: false
             }).play();
             this.scene.tweens.add({

@@ -65,7 +65,7 @@ export default class mainMenuScene extends Phaser.Scene {
 
 
         this.sound.add('wrong_answer_music', {
-            volume: 0.3,
+            volume: 0.15,
             loop: true
         }).play();
 

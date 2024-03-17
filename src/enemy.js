@@ -57,7 +57,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     shoot() {
         this.play('teacher_shoot');
-        this.scene.sound.add("mondongo", {
+        this.scene.sound.add("shoot_sound", {
             volume: 0.15,
             loop: false
         }).play();
