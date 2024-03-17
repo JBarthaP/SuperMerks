@@ -164,7 +164,6 @@ export default class Level extends Phaser.Scene {
     spawnLaser() {
         this.lasergroup.shuffle()
         let laser = this.lasergroup.getFirstDead()
-
         if (laser) {
             laser.initLaser(this.movingLasers);
         }

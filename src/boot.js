@@ -42,6 +42,8 @@ import nota_b from '../assets/sprites/nota3.png'
 import nota_a from '../assets/sprites/nota2.png'
 import nota_s from '../assets/sprites/nota1.png'
 
+const shoot_sound = require("url:../assets/sounds/laser_shoot.wav");
+const laser_sound = require("url:../assets/sounds/laser_beam.wav");
 
 
 /**
@@ -90,6 +92,8 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('shooter', shooter, { frameWidth: 32, frameHeight: 32 });
 
     //lasers
+    this.load.audio('laser_sound', shoot_sound);
+    this.load.audio('laser_beam', laser_sound);
     this.load.spritesheet('lasersprite', lasersprite, { frameWidth: 548, frameHeight: 16 });
     this.load.spritesheet('laserspritever', laserspritevert, { frameWidth: 16, frameHeight: 272 });
 

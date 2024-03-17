@@ -18,7 +18,7 @@ export default class ScoreManager {
     constructor(scene, player) {
         this.scene = scene
         this.player = player
-        this.score = 30
+        this.score = 90
         this.currentMark = PUNTUACION.F
         this.numberHitsInF = 0
         this.assignObjectsToCap()
