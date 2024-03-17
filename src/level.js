@@ -51,7 +51,7 @@ export default class Level extends Phaser.Scene {
 
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
-        const intro = this.sound.add('intro_music', { volume: 0.3 });
+        const intro = this.sound.add('intro_music', { volume: 0.15 });
 
         intro.play();
 
@@ -59,7 +59,7 @@ export default class Level extends Phaser.Scene {
 
         intro.once('complete', function () {
             audio_aux.add('body_music', {
-                volume: 0.3,
+                volume: 0.15,
                 loop: true
             }).play();
         });

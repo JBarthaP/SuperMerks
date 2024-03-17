@@ -28,6 +28,10 @@ export default class PickUp extends Phaser.GameObjects.Sprite {
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
         if (this.scene.physics.overlap(this.scene.player, this)) {
+            this.scene.sound.add("collect_sound", {
+                volume: 0.15,
+                loop: false
+            }).play();
             this.scene.player.scoreManager.currentMark = this.mark
             this.scene.player.scoreManager.updateScore()
             if (this.mark === PUNTUACION.S) {

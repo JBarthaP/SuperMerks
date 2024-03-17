@@ -65,7 +65,7 @@ export default class mainMenuScene extends Phaser.Scene {
 
 
         this.sound.add('wrong_answer_music', {
-            volume: 0.3,
+            volume: 0.15,
             loop: true
         }).play();
 
@@ -82,6 +82,10 @@ export default class mainMenuScene extends Phaser.Scene {
         this.play_btn.setInteractive();
         this.play_btn.on("pointerup", () => {
             this.sound.stopAll();
+            this.sound.add('start_sound', {
+                volume: 0.15,
+                loop: false
+            }).play();
             this.scene.start("level");
         });
 
