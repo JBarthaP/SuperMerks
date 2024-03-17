@@ -68,8 +68,9 @@ export default class Laser extends Phaser.GameObjects.Sprite {
     }
 
     trigger(moving) {
-        this.scene.sound.add('laser_sound', {
-            volume: 0.5,
+        this.scene.sound.stopByKey('laser_beam');
+        this.scene.sound.add('laser_beam', {
+            volume: 0.15,
             loop: false
         }).play();
         this.despawn = this.scene.time.addEvent({
@@ -95,10 +96,6 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.setVisible(true);
         this.body.checkCollision.none = false
         if(moving){
-            this.scene.sound.add('laser_beam', {
-                volume: 0.30,
-                loop: false
-            }).play();
             this.moveLaser()
             this.shooter.moveShooter()
         }

@@ -57,7 +57,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     shoot() {
         this.play('teacher_shoot');
-        this.scene.sound.add("mondongo", {
+        this.scene.sound.add("shoot_sound", {
             volume: 0.15,
             loop: false
         }).play();
@@ -65,12 +65,11 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         const bullet = new Bullet(this.scene, this.x, this.y, direction, this.bulletSpeed, this.player);
         
     }
-    
-    
-    ramdomCoords(max, min){
-        let x = 0
-        let y = 0;
 
+    setBulletSpeed(speed)
+    {
+        this.bulletSpeed = speed;
+        console.log("Hello", speed);
     }
 
     getCoordsPlayer() {

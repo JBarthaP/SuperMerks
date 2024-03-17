@@ -31,8 +31,9 @@ export default class Level extends Phaser.Scene {
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
         this.player.setDepth(1);
+        this.maxEnemies = 2
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemyManager = new EnemyManager(this, 4, this.player)
+        this.enemyManager = new EnemyManager(this, this.maxEnemies, this.player)
         this.enemyManager.fillPool()
         this.initMap()
 
@@ -51,7 +52,7 @@ export default class Level extends Phaser.Scene {
 
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
-        const intro = this.sound.add('intro_music', { volume: 0.3 });
+        const intro = this.sound.add('intro_music', { volume: 0.15 });
 
         intro.play();
 
@@ -59,21 +60,56 @@ export default class Level extends Phaser.Scene {
 
         intro.once('complete', function () {
             audio_aux.add('body_music', {
-                volume: 0.3,
+                volume: 0.15,
                 loop: true
             }).play();
         });
 
         this.lastMark = this.player.scoreManager.currentMark
         this.movingLasers = false
-        this.updateTimers(this.lastMark);        
+        this.updateTimers(this.lastMark);
+
+        this.mute_button = this.add.image(this.game.renderer.width - 150, this.game.renderer.height - 70, "mute_button").setScale(0.15).setVisible(false);
+        this.sound_button = this.add.image(this.game.renderer.width - 150, this.game.renderer.height - 70, "sound_button").setScale(0.15);
+
+        this.mute_button.setInteractive();
+        this.mute_button.on("pointerup", () => {
+            if (this.sound.mute == true) {
+                this.sound.mute = false
+                this.mute_button.setVisible(false);
+                this.sound_button.setVisible(true);
+            }
+            else {
+                this.sound.mute = true
+                this.mute_button.setVisible(true);
+                this.sound_button.setVisible(false);
+            }
+
+        });
+
+        this.sound_button.setInteractive();
+        this.sound_button.on("pointerup", () => {
+            if (this.sound.mute == true) {
+                this.sound.mute = false
+                this.mute_button.setVisible(false);
+                this.sound_button.setVisible(true);
+            }
+            else {
+                this.sound.mute = true
+                this.mute_button.setVisible(true);
+                this.sound_button.setVisible(false);
+            }
+
+        });
     }
 
     update() {
         this.enemyManager.spawnRandomEnemy()
 
-        if(this.player.scoreManager.currentMark !== this.lastMark){
+        if (this.player.scoreManager.currentMark !== this.lastMark) {
             this.lastMark = this.player.scoreManager.currentMark
+            this.enemyManager.setMaxEnemies(this.lastMark)
+            this.enemyManager.setBulletSpeed(this.lastMark)
             this.updateTimers(this.lastMark)
             console.log("SCORE", this.player.scoreManager.currentMark, this.lastMark)
         }
@@ -169,31 +205,31 @@ export default class Level extends Phaser.Scene {
         }
     }
 
-    updateTimers(mark){
+    updateTimers(mark) {
         let delay = 5000;
-        
-        if(mark < 40){
+
+        if (mark < 40) {
             delay -= 1000
-        }else if(mark < 50){
+        } else if (mark < 50) {
             delay -= 1500
-        }else if(mark < 70){
+        } else if (mark < 70) {
             delay -= 2000
-        }else if(mark < 90){
+        } else if (mark < 90) {
             delay -= 2500
             this.movingLasers = true
-        }else if(mark < 100){
+        } else if (mark < 100) {
             delay -= 3000
             this.movingLasers = true
-        }else{
+        } else {
             delay -= 3500
             this.movingLasers = true
         }
 
         this.spawnLaserTimer = this.time.addEvent({
-			delay: delay,
-			callback: this.spawnLaser,
-			callbackScope: this,
-			loop: true
-		});
+            delay: delay,
+            callback: this.spawnLaser,
+            callbackScope: this,
+            loop: true
+        });
     }
 }

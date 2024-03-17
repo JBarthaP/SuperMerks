@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&family=Dosis:wght@200..800&family=Micro+5&family=Ojuju:wght@200..800&family=Orbitron:wght@400..900&family=Pixelify+Sans:wght@400..700&display=swap');
+
+* {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+b {
+  color: #7DE650;
+}
+
 h1 {
   text-align: center;
+}
+
+h3 {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+body {
+  background-color: #281c2e;
+  color: #94B0C2;
 }

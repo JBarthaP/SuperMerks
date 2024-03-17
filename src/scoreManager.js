@@ -4,11 +4,11 @@
 import PickUp from "./pickup";
 
 export const PUNTUACION = {
-    F: 0,
+    F: 20,
     D: 40,
     C: 50,
-    B: 70,
-    A: 90,
+    B: 60,
+    A: 80,
     S: 100
 };
 
@@ -18,9 +18,8 @@ export default class ScoreManager {
     constructor(scene, player) {
         this.scene = scene
         this.player = player
-        this.score = 90
+        this.score = 30
         this.currentMark = PUNTUACION.F
-        this.numberHitsInF = 0
         this.assignObjectsToCap()
         this.assignTextures()
         this.actualPickUp;
@@ -49,6 +48,7 @@ export default class ScoreManager {
             spritesheet_a: false
         }
     }
+
 
     assignTextures() {
         this.marksDict = {
@@ -117,7 +117,7 @@ export default class ScoreManager {
 
     reduceScore(points) {
         const newScore = this.score - points;
-        if (newScore !== 0) {
+        if (newScore !== PUNTUACION.F) {
 
             if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
                 this.currentMark = PUNTUACION.F
