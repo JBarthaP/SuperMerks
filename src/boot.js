@@ -9,11 +9,14 @@ import map from  '../assets/maps/mapa.json'
 import player from '../assets/sprites/player1.png'
 import laser from '../assets/sprites/laser.png'
 import player_dash from '../assets/sprites/player_dash.png'
+import playerextra from '../assets/sprites/playerextra.png'
 import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
 const intro_music = require("url:../assets/sounds/intro.wav");
 const body_music = require("url:../assets/sounds/body.wav");
 const wrong_answer_music = require("url:../assets/sounds/WrongAnswer.wav");
+const bababooey = require("url:../assets/sounds/BabaBooey.mp3");
+
 import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
 import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
@@ -71,8 +74,11 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('player', player, { frameWidth: 64, frameHeight: 64 });
     this.load.audio('dash_sound', dash_sound);
     this.load.audio('damage_sound', damage_sound);
+    this.load.audio('bababooey', bababooey);
+
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('playerextra', playerextra, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('pause_button', pause_button, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('shooter', shooter, { frameWidth: 32, frameHeight: 32 });
 

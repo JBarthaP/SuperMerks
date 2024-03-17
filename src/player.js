@@ -65,13 +65,42 @@ export default class Player extends Phaser.GameObjects.Sprite {
             repeat: 0
         });
 
+        const attackAnimation = this.scene.anims.create({
+            key: 'playerAttackSide',
+            frames: this.scene.anims.generateFrameNumbers('playerextra', { start: 165, end: 167 }),
+            frameRate: 6,
+            repeat: 0
+        });
+
+        const attackAnimationDown = this.scene.anims.create({
+            key: 'playerAttackDown',
+            frames: this.scene.anims.generateFrameNumbers('playerextra', { start: 30, end: 32 }),
+            frameRate: 6,
+            repeat: 0
+        });
+
+        const attackAnimationUp = this.scene.anims.create({
+            key: 'playerAttackUp',
+            frames: this.scene.anims.generateFrameNumbers('playerextra', { start: 105, end: 107 }),
+            frameRate: 6,
+            repeat: 0
+        });
+
         this.on('animationcomplete', end => {
+            console.log("ACABA UNA ANIMACION", this.anims.currentAnim.key)
+
             if (this.anims.currentAnim.key === 'dash') {
                 this.isDashing = false;
             }
+
+            if (this.anims.currentAnim.key === 'playerAttackUp' || this.anims.currentAnim.key === 'playerAttackDown'
+                || this.anims.currentAnim.key === 'playerAttackSide') {
+                console.log("ANIMACION DE ATTACK Acabada")
+                this.isAttacking = false
+            }
         });
 
-        this.play('idle');
+        this.play('idle_side');
         this.lastDirection = new Phaser.Math.Vector2(0, 1);
 
         this.score = 5;
@@ -93,7 +122,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            k: Phaser.Input.Keyboard.KeyCodes.K
         })
         this.keySpace = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -102,6 +132,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.canDash = true
         this.isInmune = false
         this.isTakePoints = false
+        this.isAttacking = false;
 
         //Player data
         this.dashSpeed = 350
@@ -127,35 +158,45 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
                 if (this.cursors.up.isDown) {
                     direction.y -= 1;
-                    if (!this.cursors.left.isDown && !this.cursors.right.isDown) {
+                    if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.isAttacking) {
                         this.play('walk_up', true);
                     }
                 }
                 else if (this.cursors.down.isDown) {
                     direction.y += 1;
-                    if (!this.cursors.left.isDown && !this.cursors.right.isDown) {
+                    if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.isAttacking) {
                         this.play('walk_down', true);
                     }
                 }
                 if (this.cursors.left.isDown) {
                     direction.x -= 1;
-                    this.play('walk_side', true).setFlipX(true);
+                    if(!this.isAttacking){
+                        this.play('walk_side', true).setFlipX(true);
+                    }
                 }
                 else if (this.cursors.right.isDown) {
                     direction.x += 1;
-                    this.play('walk_side', true).setFlipX(false);
+                    if(!this.isAttacking){
+                        this.play('walk_side', true).setFlipX(false);
+                    }
                 }
 
                 if (this.body.velocity.x === 0 && this.body.velocity.y === 0 && !this.isDashing) {
                     if (direction.y !== 0) {
                         this.lastDirection = direction;
                     } else {
-                        if (this.lastDirection.y > 0) {
-                            this.play('idle', true);
-                        } else {
-                            this.play('idle_up', true);
+                        if (!this.cursors.left.isDown && !this.cursors.right.isDown && !this.isAttacking) {
+                            if (this.lastDirection.y > 0) {
+                                this.play('idle', true);
+                            } else {
+                                this.play('idle_up', true);
+                            }
                         }
                     }
+                }
+
+                if (this.cursors.k.isDown && !this.isAttacking) {
+                    this.attack();
                 }
 
                 direction.normalize();
@@ -213,6 +254,31 @@ export default class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
+    attack() {
+        let direction = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y);
+
+        if (direction.x !== 0) {
+            this.play('playerAttackSide', true)
+        } else if (direction.y > 0) {
+            this.play('playerAttackDown', true)
+        } else if (direction.y < 0) {
+            this.play('playerAttackUp', true)
+        } else {
+            if (this.lastDirection.y < 0) {
+                this.play('playerAttackUp', true)
+            } else {
+                this.play('playerAttackDown', true)
+            }
+        }
+
+        this.isAttacking = true;
+
+        this.scene.sound.add("bababooey", {
+            volume: 0.15,
+            loop: false
+        }).play();
+    }
+
 
 
     /**
@@ -228,7 +294,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
             if (this.timerDash >= this.dashCooldownTime) {
                 this.canDash = true
                 this.timerDash = 0;
-
             }
         }
         if (!this.isDashing) {
