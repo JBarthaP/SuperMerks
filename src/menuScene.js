@@ -82,10 +82,6 @@ export default class mainMenuScene extends Phaser.Scene {
         this.play_btn.setInteractive();
         this.play_btn.on("pointerup", () => {
             this.sound.stopAll();
-            this.sound.add('start_sound', {
-                volume: 0.15,
-                loop: false
-            }).play();
             this.scene.start("level");
         });
 
