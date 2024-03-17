@@ -32,7 +32,7 @@ export default class Level extends Phaser.Scene {
         this.player = new Player(this, 200, 300);
         this.player.setDepth(1);
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemyManager = new EnemyManager(this,4, this.player)
+        this.enemyManager = new EnemyManager(this, 4, this.player)
         this.enemyManager.fillPool()
         this.initMap()
 
@@ -41,18 +41,18 @@ export default class Level extends Phaser.Scene {
 
         this.physics.add.overlap(this.lasergroup, this.player, (obj1, obj2) => {
             //Solo le afecta al player si esta completamente visible el rayo
-            if(obj1.completeVisible && !this.player.isDashing){
+            console.log(obj1.completeVisible);
+            if (obj1.completeVisible && !this.player.isDashing) {
                 this.player.hitPlayer(obj1.damage)
-            } else if(obj1.completeVisible && this.player.isDashing)
-            {
+            } else if (obj1.completeVisible && this.player.isDashing) {
                 this.player.dashLaser(obj1.scoreDodge)
             }
-            
-		});
+
+        });
 
 
         //Se define la intro y se reproduce. Cuando termina, se pone en bucle el body de la canción. 
-        const intro = this.sound.add('intro_music', {volume: 0.3});
+        const intro = this.sound.add('intro_music', { volume: 0.3 });
 
         intro.play();
 
@@ -65,18 +65,19 @@ export default class Level extends Phaser.Scene {
             }).play();
         });
 
-        this.spawnLaserTimer = this.time.addEvent({
-			delay: 5000,
-			callback: this.spawnLaser,
-			callbackScope: this,
-			loop: true
-		});
-
-        // this.spawnLaser()
+        this.lastMark = this.player.scoreManager.currentMark
+        this.movingLasers = false
+        this.updateTimers(this.lastMark);
     }
 
     update() {
         this.enemyManager.spawnRandomEnemy()
+
+        if(this.player.scoreManager.currentMark !== this.lastMark){
+            this.lastMark = this.player.scoreManager.currentMark
+            this.updateTimers(this.lastMark)
+            console.log("SCORE", this.player.scoreManager.currentMark, this.lastMark)
+        }
     }
     /**
      * Genera una estrella en una de las bases del escenario
@@ -134,7 +135,7 @@ export default class Level extends Phaser.Scene {
         this.physics.add.collider(this.player, this.objects);
     }
 
-    initLasers(){
+    initLasers() {
         // Crear shooters
         this.shooter_left = new Shooter(this, 1135, 435, 'left');
         this.shooter_left.setRotation(Phaser.Math.DegToRad(90));
@@ -147,7 +148,7 @@ export default class Level extends Phaser.Scene {
         //horizontal laser
         this.laser = new Laser(this, 580, 435, false, this.lasergroup, this.shooter_left);
         this.laser3 = new Laser(this, 580, 212, false, this.lasergroup, this.shooter_right);
- 
+
         //vertical
         this.laser4 = new Laser(this, 433, 305, true, this.lasergroup, this.shooter_down);
         this.laser5 = new Laser(this, 851, 310, true, this.lasergroup, this.shooter_top);
@@ -161,12 +162,40 @@ export default class Level extends Phaser.Scene {
     }
 
 
-    spawnLaser(){
+    spawnLaser() {
         this.lasergroup.shuffle()
         let laser = this.lasergroup.getFirstDead()
 
         if (laser) {
-            laser.initLaser();
+            laser.initLaser(this.movingLasers);
         }
+    }
+
+    updateTimers(mark){
+        let delay = 5000;
+        
+        if(mark < 40){
+            delay -= 1000
+        }else if(mark < 50){
+            delay -= 1500
+        }else if(mark < 70){
+            delay -= 2000
+        }else if(mark < 90){
+            delay -= 2500
+            this.movingLasers = true
+        }else if(mark < 100){
+            delay -= 3000
+            this.movingLasers = true
+        }else{
+            delay -= 3500
+            this.movingLasers = true
+        }
+
+        this.spawnLaserTimer = this.time.addEvent({
+			delay: delay,
+			callback: this.spawnLaser,
+			callbackScope: this,
+			loop: true
+		});
     }
 }

@@ -13,9 +13,13 @@ import teacher from '../assets/sprites/teacher_spritesheet.png'
 const mondongo = require("url:../assets/sounds/mondongo.mp3");
 const intro_music = require("url:../assets/sounds/intro.wav");
 const body_music = require("url:../assets/sounds/body.wav");
+const wrong_answer_music = require("url:../assets/sounds/WrongAnswer.wav");
 import tileset2 from '../assets/tilesets/pixel-cyberpunk-interior.png'
 import longray from '../assets/sprites/longray.png'
 import pause_button from '../assets/sprites/PauseButton.png'
+import play_button from '../assets/sprites/PlayButton.png'
+import mute_button from '../assets/sprites/mute.png'
+import sound_button from '../assets/sprites/playSound.png'
 import lasersprite from '../assets/sprites/lasers/lasersprite2.png'
 import laserspritevert from '../assets/sprites/lasers/laserspriteVert.png'
 import spritesheet_d from '../assets/sprites/spritesheet_libro.png'
@@ -26,6 +30,8 @@ import spritesheet_s from '../assets/sprites/spritesheet_domjudge.png'
 import shooter from '../assets/sprites/disparador.png'
 const dash_sound = require("url:../assets/sounds/dash.wav");
 const damage_sound = require("url:../assets/sounds/damage.mp3");
+import mainMenu from '../assets/sprites/background.png'
+import table_back from '../assets/sprites/backTable.png'
 
 
 /**
@@ -80,6 +86,15 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('spritesheet_b', spritesheet_b, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('spritesheet_a', spritesheet_a, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('spritesheet_s', spritesheet_s, { frameWidth: 64, frameHeight: 64 });
+
+
+    //mainMenu
+    this.load.image('background_img', mainMenu);
+    this.load.image('table_back', table_back);
+    this.load.image('mute_button', mute_button);
+    this.load.image('sound_button', sound_button);
+    this.load.spritesheet('play_button', play_button, { frameWidth: 128, frameHeight: 128 });
+    this.load.audio('wrong_answer_music', wrong_answer_music);
   }
 
   /**
@@ -87,6 +102,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('level');
+    this.scene.start('lose');
   }
 }
