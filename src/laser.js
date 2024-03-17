@@ -103,6 +103,7 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.shooter.play('shooterdefault', true);
         this.body.setVelocity(0, 0);
         this.isMoving = false;   
+        this.completeVisible = false
         this.shooter.stopShooter();
     }
 

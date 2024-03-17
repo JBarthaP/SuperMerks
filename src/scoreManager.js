@@ -128,4 +128,14 @@ export default class ScoreManager {
         return selectedVector;
     }
 
+    win()
+    {
+
+    }
+
+    lose()
+    {
+        
+    }
+
 }

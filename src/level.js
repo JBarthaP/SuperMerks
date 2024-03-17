@@ -41,7 +41,6 @@ export default class Level extends Phaser.Scene {
 
         this.physics.add.overlap(this.lasergroup, this.player, (obj1, obj2) => {
             //Solo le afecta al player si esta completamente visible el rayo
-            console.log(obj1.completeVisible);
             if (obj1.completeVisible && !this.player.isDashing) {
                 this.player.hitPlayer(obj1.damage)
             } else if (obj1.completeVisible && this.player.isDashing) {
