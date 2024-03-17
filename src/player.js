@@ -282,7 +282,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         this.isAttacking = true;
 
-        this.scene.sound.add("bababooey", {
+        this.scene.sound.add("attack_sound", {
             volume: 0.15,
             loop: false
         }).play();

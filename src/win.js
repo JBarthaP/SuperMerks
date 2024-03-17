@@ -37,6 +37,9 @@ export default class Win extends Phaser.Scene {
 
     this.nota_f = this.add.image(this.game.renderer.width - 200, this.game.renderer.height - 200, "nota_s").setScale(4);
 
+    this.sound.add('finish_sound', {
+      volume: 0.15
+    }).play();
   }
 
 }

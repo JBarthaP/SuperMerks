@@ -30,6 +30,10 @@ export default class Lose extends Phaser.Scene {
       this.scene.start("mainMenuScene");
     });
 
+    this.sound.add('finish_sound', {
+      volume: 0.15
+    }).play();
+
     this.back_to_menu.on('pointerover', function (pointer) {
       this.setColor('#f55363');
     });
