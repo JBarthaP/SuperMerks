@@ -31,8 +31,9 @@ export default class Level extends Phaser.Scene {
         this.bases = this.add.group();
         this.player = new Player(this, 200, 300);
         this.player.setDepth(1);
+        this.maxEnemies = 2
         //Seria mejor hacer un grupo y repartirlo por la pantalla, solo bordes
-        this.enemyManager = new EnemyManager(this, 4, this.player)
+        this.enemyManager = new EnemyManager(this, this.maxEnemies, this.player)
         this.enemyManager.fillPool()
         this.initMap()
 
@@ -107,6 +108,8 @@ export default class Level extends Phaser.Scene {
 
         if (this.player.scoreManager.currentMark !== this.lastMark) {
             this.lastMark = this.player.scoreManager.currentMark
+            this.enemyManager.setMaxEnemies(this.lastMark)
+            this.enemyManager.setBulletSpeed(this.lastMark)
             this.updateTimers(this.lastMark)
             console.log("SCORE", this.player.scoreManager.currentMark, this.lastMark)
         }

@@ -1,4 +1,5 @@
 import Enemy from "./enemy";
+import { PUNTUACION } from "./scoreManager";
 
 // POOL DE LOS ENEMIGOS
 
@@ -9,6 +10,9 @@ export default class EnemyManager {
         this._group = scene.add.group();
         this.max = max;
         this.player = player
+        this.bulletSpeed = 0.4
+        this.assingEnemies()
+        this.assingBulletSpeed()
         this.enemiesInUse = [];
     }
 
@@ -34,12 +38,12 @@ export default class EnemyManager {
         // for (let i = 0; i < num; i++) {
         // }
         enemies.push(new Enemy(this.scene, 50, 50, this.player).setDepth(1));
-        enemies.push(new Enemy(this.scene, 1154/2, 50, this.player).setDepth(1));
+        enemies.push(new Enemy(this.scene, 1154 / 2, 50, this.player).setDepth(1));
         enemies.push(new Enemy(this.scene, 1100, 50, this.player).setDepth(1));
-        enemies.push(new Enemy(this.scene, 50, 640/2, this.player).setDepth(1));
+        enemies.push(new Enemy(this.scene, 50, 640 / 2, this.player).setDepth(1));
         enemies.push(new Enemy(this.scene, 50, 570, this.player).setDepth(1));
-        enemies.push(new Enemy(this.scene, 1100, 640/2, this.player).setDepth(1));
-        enemies.push(new Enemy(this.scene, 1150/2, 570, this.player).setDepth(1));
+        enemies.push(new Enemy(this.scene, 1100, 640 / 2, this.player).setDepth(1));
+        enemies.push(new Enemy(this.scene, 1150 / 2, 570, this.player).setDepth(1));
         enemies.push(new Enemy(this.scene, 1100, 570, this.player).setDepth(1));
 
         this.addMultipleEntity(enemies);
@@ -70,6 +74,37 @@ export default class EnemyManager {
         }
     }
 
+    setMaxEnemies(currentMark) {
+        this.max = this.enemiesMarks[currentMark]
+    }
 
+    setBulletSpeed(currentMark) {
+        this.bulletSpeed = this.bulletsSpeed[currentMark]
+        this._group.children.iterate(c => {
+            c.setBulletSpeed(this.bulletSpeed)
+        });
+    }
+
+    assingEnemies() {
+        this.enemiesMarks = {
+            [PUNTUACION.F]: 2,
+            [PUNTUACION.D]: 3,
+            [PUNTUACION.C]: 4,
+            [PUNTUACION.B]: 5,
+            [PUNTUACION.A]: 6,
+            [PUNTUACION.S]: 8
+        }
+    }
+
+    assingBulletSpeed() {
+        this.bulletsSpeed = {
+            [PUNTUACION.F]: 0.4,
+            [PUNTUACION.D]: 0.6,
+            [PUNTUACION.C]: 1,
+            [PUNTUACION.B]: 1.2,
+            [PUNTUACION.A]: 1.5,
+            [PUNTUACION.S]: 2
+        }
+    }
 
 }

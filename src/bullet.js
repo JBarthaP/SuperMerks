@@ -16,7 +16,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       //Bullets vars
       this.direction = direction;
       this.speed = speed;
-      this.damage = 1
+      this.damage = 1.5
   }
 
   preUpdate(t,dt) {
@@ -35,8 +35,4 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       }      
   }
 
-  hitCollisionPlayer()
-  {
-
-  }
 }
