@@ -28,7 +28,11 @@ let config = {
             gravity: { y: 0 },
             debug: false
         }
+    },
+    input: {
+        gamepad:true
     }
+    
 };
 
 new Phaser.Game(config);

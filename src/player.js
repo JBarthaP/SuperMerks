@@ -128,6 +128,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         })
         this.keySpace = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        //Gamepad controls
+
         //Estados jugador
         this.isDashing = false
         this.canDash = true
@@ -147,10 +149,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.handleControls()
         this.controls = this.keyboardControls
         //If gamepad controls
+        this.scene.input.gamepad.on(Phaser.Input.Gamepad.Events.BUTTON_DOWN, () => { this.controls = this.gamepadControls; });
+        // this.scene.input.gamepad.once('connected', function (pad) {
+        //     this.controls = this.gamepadControls
+        // }, this);  
+        this.scene.input.keyboard.on('keydown', () => { this.controls = this.keyboardControls})      
 
         this.scoreManager = new ScoreManager(scene, this)
         this.defaultSize = {width: this.body.width, height: this.body.height};
-
     }
 
     handleControls() {
@@ -219,6 +225,75 @@ export default class Player extends Phaser.GameObjects.Sprite {
             // pauseGame: () => {
 
             // }
+        }
+        this.gamepadControls = {
+            movementControl: () => {
+                const pad = this.scene.input.gamepad.getPad(0);
+                const dir = new Phaser.Math.Vector2(pad.leftStick.x, pad.leftStick.y);
+                this.body.setVelocity(dir.normalize().scale(this.speed).x, dir.normalize().scale(this.speed).y);
+                let direction = new Phaser.Math.Vector2();
+                const up = pad.leftStick.y < 0
+                const down = pad.leftStick.y > 0
+                const left = pad.leftStick.x < 0
+                const right = pad.leftStick.x > 0
+
+                if (up) {
+                    direction.y -= 1;
+                    if (!left && !right && !this.isAttacking) {
+                        this.play('walk_up', true);
+                    }
+                }
+                else if (down) {
+                    direction.y += 1;
+                    if (!left && !right && !this.isAttacking) {
+                        this.play('walk_down', true);
+                    }
+                }
+                if (left) {
+                    direction.x -= 1;
+                    if(!this.isAttacking){
+                        this.play('walk_side', true).setFlipX(true);
+                    }
+                }
+                else if (right) {
+                    direction.x += 1;
+                    if(!this.isAttacking){
+                        this.play('walk_side', true).setFlipX(false);
+                    }
+                }
+
+                if (this.body.velocity.x === 0 && this.body.velocity.y === 0 && !this.isDashing) {
+                    if (direction.y !== 0) {
+                        this.lastDirection = direction;
+                    } else {
+                        if (!left && !right && !this.isAttacking) {
+                            if (this.lastDirection.y > 0) {
+                                this.play('idle', true);
+                            } else {
+                                this.play('idle_up', true);
+                            }
+                        }
+                    }
+                }
+
+                if (pad.R1 && !this.isAttacking) {
+                    this.attack();
+                }
+
+            },
+
+            dashControl: () => {
+                const pad = this.scene.input.gamepad.getPad(0);
+                if (pad.A && this.canDash && !this.isAttacking) {
+                    this.initDash();
+                    this.scene.sound.add("dash_sound", {
+                        volume: 0.15,
+                        loop: false
+                    }).play();
+                    this.play('dash', true);
+                }
+            },
+ 
         }
     }
 
@@ -297,6 +372,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
      * @override
      */
     preUpdate(t, dt) {
+        
         super.preUpdate(t, dt);
         if (!this.canDash) {
             this.timerDash += dt
