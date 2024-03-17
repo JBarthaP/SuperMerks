@@ -46,7 +46,8 @@ const laser_sound = require("url:../assets/sounds/laser_beam.wav");
 import full_screen from '../assets/sprites/full_screen.png'
 import window_mode from '../assets/sprites/window_mode.png'
 const shoot_sound = require("url:../assets/sounds/chalk_shoot.wav");
-
+const collect_sound = require("url:../assets/sounds/collect.wav");
+const start_sound = require("url:../assets/sounds/start.wav");
 
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
@@ -73,6 +74,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('tilesmapa', tileset);
     this.load.image('tilesmapa2', tileset2);
     
+    this.load.audio('start_sound', start_sound);
     this.load.audio('mondongo', mondongo)
     this.load.audio('shoot_sound', shoot_sound)
     this.load.audio('intro_music', intro_music);
@@ -87,7 +89,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('dash_sound', dash_sound);
     this.load.audio('damage_sound', damage_sound);
     this.load.audio('bababooey', bababooey);
-
+    this.load.audio('collect_sound', collect_sound);
     this.load.spritesheet('teacher', teacher, { frameWidth: 42, frameHeight: 64 });
     this.load.spritesheet('player_dash', player_dash, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('playerextra', playerextra, { frameWidth: 64, frameHeight: 64 });
