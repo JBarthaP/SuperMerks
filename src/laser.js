@@ -15,6 +15,8 @@ export default class Laser extends Phaser.GameObjects.Sprite {
 
         this.group = group
         this.completeVisible = false
+        this.damage = 1
+        this.scoreDodge = 2
 
         this.shooter = shooter
 

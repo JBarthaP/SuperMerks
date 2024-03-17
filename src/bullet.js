@@ -25,7 +25,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
       this.x += this.direction.x * this.speed;
       this.y += this.direction.y * this.speed;
       if (this.scene.physics.overlap(this.scene.player, this)) {
-        if(!this.scene.player.isInmune){
+        if(!this.scene.player.isInmune && !this.scene.player.isDashing){
           this.scene.player.hitPlayer(this.damage)
           this.destroy()
         }

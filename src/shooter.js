@@ -15,25 +15,25 @@ export default class Shooter extends Phaser.GameObjects.Sprite {
         
         this.scene.anims.create({
             key: 'shooterdown',
-            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 0, end: 2 }),
+            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 0, end: 3 }),
             frameRate: 1
         })
 
         this.scene.anims.create({
             key: 'shooterright',
-            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 3, end: 5 }),
+            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 4, end: 7 }),
             frameRate: 1
         })
 
         this.scene.anims.create({
             key: 'shooterup',
-            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 6, end: 8 }),
+            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 8, end: 11 }),
             frameRate: 1
         })
 
         this.scene.anims.create({
             key: 'shooterleft',
-            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 9, end: 11}),
+            frames: this.scene.anims.generateFrameNumbers('shooter', {start: 12, end: 15}),
             frameRate: 1
         })
 

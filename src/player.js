@@ -101,6 +101,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.isDashing = false
         this.canDash = true
         this.isInmune = false
+        this.isTakePoints = false
 
         //Player data
         this.dashSpeed = 350
@@ -108,12 +109,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.dashCooldownTime = 2000;
         this.timerDash = 0
         this.invulnerabiltyDuration = 1000
+        this.cooldownPoints = 2000
 
         //Choose controls
         this.handleControls()
         this.controls = this.keyboardControls
         //If gamepad controls
-
 
         this.scoreManager = new ScoreManager(scene,this)
 
@@ -164,7 +165,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
             dashControl: () => {
                 if (Phaser.Input.Keyboard.JustDown(this.keySpace) && this.canDash) {
                     this.initDash();
-                    this.scoreManager.addPoints(11)
+                    this.scene.sound.add("dash_sound", {
+                        volume: 0.75,
+                        loop: false
+                    }).play();
                     this.play('dash', true);
                 }
             },
@@ -175,12 +179,28 @@ export default class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
+    dashLaser(score)
+    {
+        if(!this.isTakePoints)
+        {
+            this.isTakePoints = true
+            this.scoreManager.addPoints(score)
+            this.scene.time.delayedCall(this.cooldownPoints, ()=> {
+                this.isTakePoints = false
+            })
+        }
+    }
+
 
     hitPlayer(dmg) {
         if(!this.isInmune)
         {
             this.scoreManager.reduceScore(dmg)
             this.isInmune = true;
+            this.scene.sound.add("damage_sound", {
+                volume: 0.30,
+                loop: false
+            }).play();
             this.scene.tweens.add({
                 targets: this,
                 alpha: {from:1, to: 0},

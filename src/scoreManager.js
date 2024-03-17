@@ -22,6 +22,12 @@ export default class ScoreManager {
         this.numberHitsInF = 0
         this.assignObjectsToCap()
         this.actualPickUp;
+        this.positionsPickUps = [
+            new Phaser.Math.Vector2(200, 100),
+            new Phaser.Math.Vector2(900, 100),
+            new Phaser.Math.Vector2(100, 500),
+            new Phaser.Math.Vector2(1154 / 2, 640 / 2),
+            new Phaser.Math.Vector2(900, 500)]
 
         //Provisional
         this.label = this.scene.add.text(10, 10, "").setDepth(2);
@@ -69,7 +75,7 @@ export default class ScoreManager {
     }
 
     reduceScore(points) {
-        const newScore = this.score / points;
+        const newScore = this.score - points;
         if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
             this.currentMark = PUNTUACION.F
         } else if (this.currentMark === PUNTUACION.C && newScore <= PUNTUACION.C) {
@@ -87,13 +93,16 @@ export default class ScoreManager {
     }
 
     passUpCap(newMark) {
-        this.actualPickUp = new PickUp(this.scene, 100, 100, this.objectsDict[newMark].texture, this.objectsDict[newMark].frames, newMark)
+        if (typeof this.actualPickUp === 'undefined') {
+            const positionToSpawn = this.calculatePositionPickUp()
+            this.actualPickUp = new PickUp(this.scene, positionToSpawn.x, positionToSpawn.y, this.objectsDict[newMark].texture, this.objectsDict[newMark].frames, newMark)
+        }
     }
 
     passDownCap() {
-        if(this.actualPickUp)
-        {
+        if (this.actualPickUp) {
             this.actualPickUp.destroy()
+            this.actualPickUp = undefined
         }
     }
 
@@ -101,6 +110,22 @@ export default class ScoreManager {
         this.label.text = 'Score: ' + this.score;
         this.labelNota.text = 'Score: ' + this.currentMark;
 
+    }
+
+    calculatePositionPickUp() {
+        const distances = [];
+        for (const vector of this.positionsPickUps) {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, vector.x, vector.y);
+            distances.push({ vector, distance });
+        }
+
+        distances.sort((a, b) => a.distance - b.distance);
+
+        const closestVectors = distances.slice(0, 3);
+
+        const randomIndex = Phaser.Math.Between(0, 2);
+        const selectedVector = closestVectors[randomIndex].vector;
+        return selectedVector;
     }
 
 }
