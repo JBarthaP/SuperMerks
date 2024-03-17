@@ -61,18 +61,20 @@ export default class Level extends Phaser.Scene {
             }).play();
         });
 
-        this.spawnLaserTimer = this.time.addEvent({
-			delay: 5000,
-			callback: this.spawnLaser,
-			callbackScope: this,
-			loop: true
-		});
+        this.lastMark = this.player.scoreManager.currentMark
+        this.movingLasers = false
 
-        // this.spawnLaser()
+        this.updateTimers(this.lastMark);
     }
 
     update() {
         this.enemyManager.spawnRandomEnemy()
+
+        if(this.player.scoreManager.currentMark !== this.lastMark){
+            this.lastMark = this.player.scoreManager.currentMark
+            this.updateTimers(this.lastMark)
+            console.log("SCORE", this.player.scoreManager.currentMark, this.lastMark)
+        }
     }
     /**
      * Genera una estrella en una de las bases del escenario
@@ -162,7 +164,35 @@ export default class Level extends Phaser.Scene {
         let laser = this.lasergroup.getFirstDead()
 
         if (laser) {
-            laser.initLaser();
+            laser.initLaser(this.movingLasers);
         }
+    }
+
+    updateTimers(mark){
+        let delay = 5000;
+        
+        if(mark < 40){
+            delay -= 1000
+        }else if(mark < 50){
+            delay -= 1500
+        }else if(mark < 70){
+            delay -= 2000
+        }else if(mark < 90){
+            delay -= 2500
+            this.movingLasers = true
+        }else if(mark < 100){
+            delay -= 3000
+            this.movingLasers = true
+        }else{
+            delay -= 3500
+            this.movingLasers = true
+        }
+
+        this.spawnLaserTimer = this.time.addEvent({
+			delay: delay,
+			callback: this.spawnLaser,
+			callbackScope: this,
+			loop: true
+		});
     }
 }

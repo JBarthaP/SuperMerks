@@ -7,6 +7,8 @@ export default class Laser extends Phaser.GameObjects.Sprite {
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
+        this.speed = 40
+        this.dir = dir
 
         this.setScale(2,1)
         this.setDepth(1);
@@ -48,13 +50,22 @@ export default class Laser extends Phaser.GameObjects.Sprite {
             this.body.setSize(547)
             this.body.setOffset(1, 0)
         }
+
+        this.direction = new Phaser.Math.Vector2();
+
+        if(this.dir){
+            this.direction.x += 1;
+        }else{
+            this.direction.y += 1;
+        }
+        this.isMoving = false;   
     }
 
-    initLaser(){
-        this.shooter.shoot(this)
+    initLaser(moving){
+        this.shooter.shoot(this, moving)
     }
 
-    trigger() {
+    trigger(moving) {
         this.despawn = this.scene.time.addEvent({
 			delay: 5000,
 			callback: this.powerOff,
@@ -77,6 +88,10 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.setActive(true);
         this.setVisible(true);
         this.body.checkCollision.none = false
+        if(moving){
+            this.moveLaser()
+            this.shooter.moveShooter()
+        }
     }
 
     powerOff(){
@@ -84,6 +99,37 @@ export default class Laser extends Phaser.GameObjects.Sprite {
         this.group.killAndHide(this)
         this.shooter.anims.stop('shooterdown', true);
         this.shooter.play('shooterdefault', true);
+        this.body.setVelocity(0, 0);
+        this.isMoving = false;   
+        this.shooter.stopShooter();
+    }
+
+    moveLaser(){
+        this.isMoving = true;   
+        this.body.setVelocity(this.direction.x * this.speed, this.direction.y * this.speed)
+    }
+
+    preUpdate(t, dt){
+        super.preUpdate(t, dt);
+        if(this.dir){
+            if(this.x >= 900){
+                this.direction.x = -1;
+            }else if(this.x <= 300){
+                this.direction.x = 1;
+            }
+            if(this.isMoving){
+                this.moveLaser();
+            }
+        }else{
+            if(this.y >= 450){
+                this.direction.y = -1;
+            }else if(this.y <= 100){
+                this.direction.y = 1;
+            }
+            if(this.isMoving){
+                this.moveLaser();
+            }
+        }
     }
 
 }
