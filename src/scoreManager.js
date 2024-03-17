@@ -3,7 +3,7 @@
 
 import PickUp from "./pickup";
 
-const PUNTUACION = {
+export const PUNTUACION = {
     F: 0,
     D: 40,
     C: 50,
@@ -67,6 +67,8 @@ export default class ScoreManager {
             this.score = PUNTUACION.S
             this.passUpCap(PUNTUACION.S)
 
+        } else if (this.currentMark === PUNTUACION.S) {
+            this.score = PUNTUACION.S
         } else {
             this.score += points
         }
@@ -76,18 +78,24 @@ export default class ScoreManager {
 
     reduceScore(points) {
         const newScore = this.score - points;
-        if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
-            this.currentMark = PUNTUACION.F
-        } else if (this.currentMark === PUNTUACION.C && newScore <= PUNTUACION.C) {
-            this.currentMark = PUNTUACION.D
-        } else if (this.currentMark === PUNTUACION.B && newScore <= PUNTUACION.B) {
-            this.currentMark = PUNTUACION.C
-        } else if (this.currentMark === PUNTUACION.A && newScore <= PUNTUACION.A) {
-            this.currentMark = PUNTUACION.B
-        } else if (this.currentMark === PUNTUACION.S && newScore <= PUNTUACION.S) {
-            this.currentMark = PUNTUACION.A
+        if (newScore !== 0) {
+
+            if (this.currentMark === PUNTUACION.D && newScore <= PUNTUACION.D) {
+                this.currentMark = PUNTUACION.F
+            } else if (this.currentMark === PUNTUACION.C && newScore <= PUNTUACION.C) {
+                this.currentMark = PUNTUACION.D
+            } else if (this.currentMark === PUNTUACION.B && newScore <= PUNTUACION.B) {
+                this.currentMark = PUNTUACION.C
+            } else if (this.currentMark === PUNTUACION.A && newScore <= PUNTUACION.A) {
+                this.currentMark = PUNTUACION.B
+            } else if (this.currentMark === PUNTUACION.S && newScore <= PUNTUACION.S) {
+                this.currentMark = PUNTUACION.A
+            }
+            this.score -= points;
         }
-        this.score -= points;
+        else {
+            this.lose()
+        }
         this.passDownCap()
         this.updateScore()
     }
@@ -128,14 +136,12 @@ export default class ScoreManager {
         return selectedVector;
     }
 
-    win()
-    {
-
+    win() {
+        this.player.win()
     }
 
-    lose()
-    {
-        
+    lose() {
+        this.player.die()
     }
 
 }

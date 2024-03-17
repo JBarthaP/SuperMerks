@@ -252,12 +252,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     win() {
         this.scene.sound.stopAll()
-        this.scene.start('win')
+        this.scene.scene.start('win')
     }
 
     die() {
         this.scene.sound.stopAll()
-        this.scene.start('lose')
+        this.scene.scene.start('lose')
     }
 
 }

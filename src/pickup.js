@@ -1,9 +1,10 @@
 import Phaser from 'phaser'
+import { PUNTUACION } from './scoreManager';
 
 
 export default class PickUp extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, sprite,frames, mark) {
+    constructor(scene, x, y, sprite, frames, mark) {
         super(scene, x, y, sprite);
         this.scene = scene
         this.scene.add.existing(this);
@@ -12,8 +13,8 @@ export default class PickUp extends Phaser.GameObjects.Sprite {
 
         this.scene.anims.create({
             key: sprite,
-            frames: this.scene.anims.generateFrameNumbers(sprite, {start: 0, end: frames-1}),
-            frameRate: frames-1,
+            frames: this.scene.anims.generateFrameNumbers(sprite, { start: 0, end: frames - 1 }),
+            frameRate: frames - 1,
             repeat: -1
         });
 
@@ -29,6 +30,9 @@ export default class PickUp extends Phaser.GameObjects.Sprite {
         if (this.scene.physics.overlap(this.scene.player, this)) {
             this.scene.player.scoreManager.currentMark = this.mark
             this.scene.player.scoreManager.updateScore()
+            if (this.mark === PUNTUACION.S) {
+                this.scene.player.scoreManager.win()
+            }
             this.destroy();
         }
     }
